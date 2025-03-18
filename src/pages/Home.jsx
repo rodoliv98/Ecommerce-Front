@@ -28,8 +28,7 @@ const Home = () => {
         try {
             await axios.post('https://e-commerce-api-akwz.onrender.com/cart', { productId });
         } catch (error) {
-            console.error('Error adding product to cart:', error);
-            //if (error.response.data === 'Please login') return redirectUser('/login');
+            if (error.response.data === 'Please login') return redirectUser('/login');
         }
     };
 
