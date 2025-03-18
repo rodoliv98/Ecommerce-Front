@@ -7,7 +7,7 @@ const Purchases = () => {
     useEffect(() => {
         const fetchPurchases = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user/historic');
+                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/historic');
                 setPurchases(response.data);
             } catch (error) {
                 console.error('Error fetching purchases:', error);

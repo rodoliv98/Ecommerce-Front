@@ -16,7 +16,7 @@ const Addresses = () => {
     useEffect(() => {
         const fetchAddresses = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user/address');
+                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/address');
                 setAddresses(response.data);
             } catch (error) {
                 setError('There was an error. Please try again.');
@@ -46,7 +46,7 @@ const Addresses = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/user/address', newAddress);
+            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/user/address', newAddress);
             setAddresses([...addresses, response.data]);
             setNewAddress({
                 country: '',
@@ -63,7 +63,7 @@ const Addresses = () => {
     const handleUpdate = async (index) => {
         try {
             const address = addresses[index];
-            await axios.patch(`http://localhost:3000/user/address/${address.id}`, address);
+            await axios.patch(`https://e-commerce-api-akwz.onrender.com/user/address/${address.id}`, address);
         } catch (error) {
             setError('There was an error updating the address. Please try again.');
         }
@@ -72,7 +72,7 @@ const Addresses = () => {
     const handleDelete = async (index) => {
         try {
             const address = addresses[index];
-            await axios.delete(`http://localhost:3000/user/address/${address._id}`);
+            await axios.delete(`https://e-commerce-api-akwz.onrender.com/user/address/${address._id}`);
             setAddresses(addresses.filter((_, i) => i !== index));
         } catch (error) {
             setError('There was an error deleting the address. Please try again.');

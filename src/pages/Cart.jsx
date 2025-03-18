@@ -10,7 +10,7 @@ const Cart = () => {
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/cart');
+                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
                 setCartItems(response.data);
             } catch (error) {
                 if (error.response.data === 'Please login') return redirectUser('/login');
@@ -23,7 +23,7 @@ const Cart = () => {
 
     const handleRemoveFromCart = async (productId) => {
         try {
-            await axios.delete('http://localhost:3000/cart', { data: { productId } });
+            await axios.delete('https://e-commerce-api-akwz.onrender.com/cart', { data: { productId } });
             setCartItems(cartItems.filter(item => item._id !== productId));
         } catch (error) {
             console.log('Error, please try again.');
@@ -32,7 +32,7 @@ const Cart = () => {
 
     const handleDecreaseQuantity = async (productId) => {
         try {
-            const response = await axios.patch('http://localhost:3000/cart/decrease', { productId });
+            const response = await axios.patch('https://e-commerce-api-akwz.onrender.com/cart/decrease', { productId });
             setCartItems(cartItems.map(item =>
                 item._id === productId ? { ...item, quantity: response.data.quantity } : item
             ));
@@ -43,7 +43,7 @@ const Cart = () => {
 
     const handleIncreaseQuantity = async (productId) => {
         try {
-            const response = await axios.patch('http://localhost:3000/cart/increase', { productId });
+            const response = await axios.patch('https://e-commerce-api-akwz.onrender.com/cart/increase', { productId });
             setCartItems(cartItems.map(item =>
                 item._id === productId ? { ...item, quantity: response.data.quantity } : item
             ));

@@ -11,7 +11,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/login', { email, password });
+      const response = await axios.post('https://e-commerce-api-akwz.onrender.com/login', { email, password });
       if(response.data === 'Login successful'){
         redirectUser('/');
       }

@@ -8,7 +8,7 @@ const Recovery = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/register/recovery-password', { email });
+            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/register/recovery-password', { email });
             setMessage(response.data);
         } catch (error) {
             setMessage(error.response.data);

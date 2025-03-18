@@ -10,7 +10,7 @@ const EmailConfirmed = () => {
     useEffect(() => {
         async function handleSendEmail() {
             try {
-                const response = await axios.post(`http://localhost:3000/register/verify-email?token=${token}`);
+                const response = await axios.post(`https://e-commerce-api-akwz.onrender.com/register/verify-email?token=${token}`);
                 setMessage(response.data);
             } catch (err) {
                 setMessage('Error confirming email');

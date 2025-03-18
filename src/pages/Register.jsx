@@ -21,7 +21,7 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/register', formData);
+            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/register', formData);
             setMessage('Account created! Please verify your email to login.');
         } catch (error) {
             setMessage(error.response.data);
