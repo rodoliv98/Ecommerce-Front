@@ -61,6 +61,8 @@ const router = createBrowserRouter([
   }
 ])
 
+axios.defaults.withCredentials = true;
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <RouterProvider router={router} />
