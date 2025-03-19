@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-axios.defaults.withCredentials = true;
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -13,7 +12,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://e-commerce-api-akwz.onrender.com/login', { email, password });
+      const response = await axios.post('https://e-commerce-api-akwz.onrender.com/login', { email, password }, { withCredentials: true });
       if(response.data === 'Login successful'){
         redirectUser('/');
       }
