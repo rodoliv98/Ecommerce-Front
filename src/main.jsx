@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+import axios from 'axios'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './pages/Login'
