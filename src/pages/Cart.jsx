@@ -12,23 +12,16 @@ const Cart = () => {
             try {
                 const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
                 setCartItems(response.data);
-                console.log(cartItems);
             } catch (error) {
                 if (error.response.data === 'Please login') return redirectUser('/login');
-                console.log('Error, please try again.');
             }
         };
 
         fetchCartItems();
     }, []);
 
-    const handleRemoveFromCart = async (productId) => {
-        try {
-            await axios.delete('https://e-commerce-api-akwz.onrender.com/cart', { data: { productId } });
-            setCartItems(cartItems.filter(item => item._id !== productId));
-        } catch (error) {
-            console.log('Error, please try again.');
-        }
+    const handleRemoveFromCart = (productId) => {
+        setCartItems(cartItems.filter(item => item._id !== productId)); // Remove item locally
     };
 
     const handleDecreaseQuantity = (productId) => {
@@ -37,14 +30,14 @@ const Cart = () => {
                 item._id === productId
                     ? { ...item, quantity: item.quantity - 1 }
                     : item
-            ).filter(item => item.quantity > 0); // Remove items with quantity 0
+            ).filter(item => item.quantity > 0);
             return updatedCart;
         });
     };
 
     const handleIncreaseQuantity = (productId) => {
         setCartItems(cartItems.map(item =>
-            item._id === productId && item.quantity < 10 // Prevent quantity from exceeding 10
+            item._id === productId && item.quantity < 10
                 ? { ...item, quantity: item.quantity + 1 }
                 : item
         ));
