@@ -16,6 +16,7 @@ const Profile = () => {
                 const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user');
                 setUserData(response.data);
             } catch (err) {
+                console.log(err);
                 if(err.response.data === 'Please login'){
                     userRedirect('/login');
                 }
