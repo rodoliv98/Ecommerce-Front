@@ -32,16 +32,19 @@ const Cart = () => {
     };
 
     const handleDecreaseQuantity = (productId) => {
-        setCartItems(cartItems.map(item =>
-            item._id === productId && item.quantity > 1
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-        ));
+        setCartItems(cartItems => {
+            const updatedCart = cartItems.map(item =>
+                item._id === productId
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item
+            ).filter(item => item.quantity > 0); // Remove items with quantity 0
+            return updatedCart;
+        });
     };
 
     const handleIncreaseQuantity = (productId) => {
         setCartItems(cartItems.map(item =>
-            item._id === productId
+            item._id === productId && item.quantity < 10 // Prevent quantity from exceeding 10
                 ? { ...item, quantity: item.quantity + 1 }
                 : item
         ));
