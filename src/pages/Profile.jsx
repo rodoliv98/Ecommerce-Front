@@ -29,7 +29,17 @@ const Profile = () => {
         fetchUserData();
     }, []);
 
-    if (loading) return <div className="text-white">Loading...</div>;
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-900">
+                <div className="flex flex-col items-center">
+                    <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+                    <p className="text-white mt-4">Loading...</p>
+                </div>
+            </div>
+        );
+    }
+
     if (error) return <div className="text-red-500">Error: {error}</div>;
 
     return (
