@@ -4,6 +4,7 @@ import { useLocation, Link } from "react-router-dom";
 
 const EmailConfirmed = () => {
     const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(true);
     const location = useLocation();
     const token = new URLSearchParams(location.search).get('token');
 
@@ -14,10 +15,23 @@ const EmailConfirmed = () => {
                 setMessage(response.data);
             } catch (err) {
                 setMessage('Error confirming email');
+            } finally {
+                setLoading(false);
             }
         }
         handleSendEmail();
     }, [token]);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-900">
+                <div className="flex flex-col items-center">
+                    <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+                    <p className="text-white mt-4">Loading...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="relative flex items-center justify-center min-h-screen bg-gray-900">
