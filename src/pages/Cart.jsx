@@ -19,7 +19,7 @@ const Cart = () => {
         };
 
         fetchCartItems();
-    }, [cartItems]);
+    }, []);
 
     const handleRemoveFromCart = async (productId) => {
         try {
