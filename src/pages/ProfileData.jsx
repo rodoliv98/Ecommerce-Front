@@ -8,6 +8,7 @@ const ProfileData = () => {
         birthDate: '',
         cpf: ''
     });
+    const [empty, setEmpty] = useState('');
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
@@ -15,6 +16,15 @@ const ProfileData = () => {
         const getData = async () => {
             try {
                 const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/profile');
+                if(response.data.findProfile.fullName === '' &&
+                   response.data.findProfile.birthDate === '' &&
+                   response.data.findProfile.cpf === ''){
+                    setEmpty({
+                        fullName: response.data.findProfile.fullName,
+                        birthDate: response.data.findProfile.birthDate,
+                        cpf: response.data.findProfile.cpf
+                    });
+                }
                 setProfile({
                     fullName: response.data.findProfile.fullName,
                     birthDate: response.data.findProfile.birthDate,
@@ -39,6 +49,11 @@ const ProfileData = () => {
         e.preventDefault();
         
         try{
+            if(empty.fullName === '' && empty.birthDate === '' && empty.cpf === ''){
+                const response = await axios.post('https://e-commerce-api-akwz.onrender.com/user/profile', profile);
+                setMessage(response.data.msg);
+                return;
+            }
             const response = await axios.patch('https://e-commerce-api-akwz.onrender.com/user/profile', profile);
             setMessage(response.data.msg);
         } catch(err){

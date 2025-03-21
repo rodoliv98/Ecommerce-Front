@@ -5,6 +5,8 @@ import axios from 'axios';
 const Home = () => {
     const [products, setProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const redirectUser = useNavigate();
 
     useEffect(() => {
@@ -14,6 +16,9 @@ const Home = () => {
                 setProducts(response.data.products || response.data);
             } catch (error) {
                 console.error('Error fetching products:', error);
+                setError('Failed to fetch products');
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -36,6 +41,25 @@ const Home = () => {
     const filteredProducts = products.filter(product =>
         product.item.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-900">
+                <div className="flex flex-col items-center">
+                    <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+                    <p className="text-white mt-4">Loading...</p>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-900">
+                <p className="text-red-500">{error}</p>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gray-900 p-8">
