@@ -12,6 +12,7 @@ const Cart = () => {
             try {
                 const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
                 setCartItems(response.data);
+                console.log(cartItems);
             } catch (error) {
                 if (error.response.data === 'Please login') return redirectUser('/login');
                 console.log('Error, please try again.');
@@ -19,7 +20,7 @@ const Cart = () => {
         };
 
         fetchCartItems();
-    }, []);
+    }, [cartItems]);
 
     const handleRemoveFromCart = async (productId) => {
         try {
