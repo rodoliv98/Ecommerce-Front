@@ -17,7 +17,7 @@ const Profile = () => {
                 setUserData(response.data);
             } catch (err) {
                 console.log(err);
-                if(err.response.data === 'Please login'){
+                if(err.response.data === 'Unauthorized'){
                     userRedirect('/login');
                 }
                 setError(err.message);

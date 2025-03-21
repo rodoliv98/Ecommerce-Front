@@ -13,7 +13,7 @@ const Cart = () => {
                 const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
                 setCartItems(response.data);
             } catch (error) {
-                if (error.response.data === 'Please login') return redirectUser('/login');
+                if (error.response.data === 'Unauthorized') return redirectUser('/login');
             }
         };
 
