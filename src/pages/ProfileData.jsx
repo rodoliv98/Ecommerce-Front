@@ -17,15 +17,6 @@ const ProfileData = () => {
             try {
                 const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/profile');
                 console.log(response.data);
-                if(response.data.findProfile.fullName === '' &&
-                   response.data.findProfile.birthDate === '' &&
-                   response.data.findProfile.cpf === ''){
-                    setEmpty({
-                        fullName: response.data.findProfile.fullName,
-                        birthDate: response.data.findProfile.birthDate,
-                        cpf: response.data.findProfile.cpf
-                    });
-                }
                 setProfile({
                     fullName: response.data.findProfile.fullName,
                     birthDate: response.data.findProfile.birthDate,
@@ -33,6 +24,13 @@ const ProfileData = () => {
                 });
             } catch (error) {
                 console.error('Error fetching profile data:', error);
+                if(error.response.data === 'Not found'){
+                    setEmpty({
+                        fullName: '',
+                        birthDate: '',
+                        cpf: ''
+                    });
+                }
             }
         };
         getData();
@@ -53,6 +51,7 @@ const ProfileData = () => {
             if(empty.fullName === '' && empty.birthDate === '' && empty.cpf === ''){
                 const response = await axios.post('https://e-commerce-api-akwz.onrender.com/user/profile', profile);
                 setMessage(response.data.msg);
+                setEmpty('');
                 return;
             }
             const response = await axios.patch('https://e-commerce-api-akwz.onrender.com/user/profile', profile);
