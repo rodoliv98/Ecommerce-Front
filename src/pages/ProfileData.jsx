@@ -16,6 +16,7 @@ const ProfileData = () => {
         const getData = async () => {
             try {
                 const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/profile');
+                console.log(response.data);
                 if(response.data.findProfile.fullName === '' &&
                    response.data.findProfile.birthDate === '' &&
                    response.data.findProfile.cpf === ''){
