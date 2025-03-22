@@ -84,6 +84,7 @@ const ProfileData = () => {
                         name="fullName"
                         value={profile.fullName}
                         onChange={handleChange}
+                        placeholder='Full Name'
                         className="w-full p-2 rounded bg-gray-700 text-white"
                     />
                 </div>
@@ -95,6 +96,7 @@ const ProfileData = () => {
                         name="birthDate"
                         value={profile.birthDate}
                         onChange={handleChange}
+                        placeholder='DD/MM/YYYY'
                         className="w-full p-2 rounded bg-gray-700 text-white"
                     />
                 </div>
@@ -106,6 +108,7 @@ const ProfileData = () => {
                         name="cpf"
                         value={profile.cpf}
                         onChange={handleChange}
+                        placeholder='000.000.000-00'
                         className="w-full p-2 rounded bg-gray-700 text-white"
                     />
                 </div>
