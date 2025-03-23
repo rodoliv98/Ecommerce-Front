@@ -116,7 +116,7 @@ const ProfileData = () => {
                     <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 active:bg-blue-700">
                         Save
                     </button>
-                    {message && <p className="text-white">{message}</p>}
+                    {<p className="text-white">{message.join(', ')}</p>}
                 </div>
             </form>
         </div>
