@@ -57,7 +57,7 @@ const Register = () => {
             const { confirmPassword, ...dataToSend } = formData;
             const response = await axios.post('https://e-commerce-api-akwz.onrender.com/register', dataToSend);
             if (response.data === 'Account created') {
-                redirectUser('/login');
+                setMessage('Account created. Please check your email to verify your account.');
             }
         } catch (error) {
             setMessage(error.response.data);
