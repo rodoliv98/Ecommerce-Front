@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -8,23 +8,61 @@ const Register = () => {
         lastName: '',
         email: '',
         password: '',
+        confirmPassword: '',
     });
     const [message, setMessage] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const redirectUser = useNavigate();
+
+    const validatePassword = (password) => {
+        const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
+        return regex.test(password);
+    };
 
     const handleChange = (e) => {
+        const { name, value } = e.target;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value,
+            [name]: value,
         });
+
+        if (name === 'password') {
+            if (value === '') {
+                setPasswordError('');
+            } else if (!validatePassword(value)) {
+                setPasswordError(
+                    'Password must contain at least 10 characters, including uppercase, lowercase, a number, and a symbol.'
+                );
+            } else {
+                setPasswordError('');
+            }
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.password !== formData.confirmPassword) {
+            setMessage('Passwords do not match.');
+            return;
+        }
+        if (passwordError) {
+            setMessage('Please fix the password requirements.');
+            return;
+        }
+        setMessage('');
+        setPasswordError('');
+        setIsSubmitting(true);
         try {
-            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/register', formData);
-            setMessage('Account created! Please verify your email to login.');
+            const { confirmPassword, ...dataToSend } = formData;
+            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/register', dataToSend);
+            if (response.data === 'Account created') {
+                redirectUser('/login');
+            }
         } catch (error) {
             setMessage(error.response.data);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -86,10 +124,28 @@ const Register = () => {
                             required
                             className="bg-gray-700 text-white w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         />
+                        {passwordError && <p className="text-red-500 mt-2">{passwordError}</p>}
+                    </div>
+                    <div>
+                        <label htmlFor="confirmPassword" className="block text-sm font-medium text-white">Confirm Password:</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            value={formData.confirmPassword || ''}
+                            onChange={handleChange}
+                            required
+                            className="bg-gray-700 text-white w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        />
                     </div>
                     <button type="submit" className="w-full px-4 py-2 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         Register
                     </button>
+                    {isSubmitting && (
+                        <div className="flex justify-center mt-4">
+                            <div className="w-6 h-6 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+                        </div>
+                    )}
                 </form>
                 {message && <p className="mt-4 text-center text-white">{message}</p>}
             </div>
