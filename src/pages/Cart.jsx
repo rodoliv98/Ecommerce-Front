@@ -21,7 +21,7 @@ const Cart = () => {
     }, []);
 
     const handleRemoveFromCart = (productId) => {
-        setCartItems(cartItems.filter(item => item._id !== productId)); // Remove item locally
+        setCartItems(cartItems.filter(item => item._id !== productId));
     };
 
     const handleDecreaseQuantity = (productId) => {
@@ -43,6 +43,10 @@ const Cart = () => {
         ));
     };
 
+    const calculateTotal = () => {
+        return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    };
+
     return (
         <div className="min-h-screen bg-gray-900 p-8">
             <div className="flex justify-between items-center mb-8">
@@ -59,6 +63,7 @@ const Cart = () => {
                         <div key={item._id} className="bg-gray-800 p-6 rounded-lg shadow-lg">
                             <h2 className="text-xl font-bold text-white mb-2">{item.item}</h2>
                             <p className="text-lg font-semibold text-white">Price: R${item.price}</p>
+                            <p className="text-lg font-semibold text-white">Subtotal: R${(item.price * item.quantity).toFixed(2)}</p>
                             <div className="flex items-center justify-between mt-4">
                                 <button
                                     onClick={() => handleDecreaseQuantity(item._id)}
@@ -84,6 +89,11 @@ const Cart = () => {
                     ))
                 )}
             </div>
+            {cartItems.length > 0 && (
+                <div className="mt-8 bg-gray-800 p-6 rounded-lg shadow-lg">
+                    <h2 className="text-2xl font-bold text-white">Total: R${calculateTotal().toFixed(2)}</h2>
+                </div>
+            )}
         </div>
     );
 };
