@@ -13,6 +13,8 @@ import ChangePassword from './pages/ChangePassword'
 import EmailConfirmed from './pages/EmailConfirmed'
 import Addresses from './pages/Addresses'
 import Cart from './pages/Cart'
+import Payment from './pages/Payment'
+import Confirmation from './pages/Confirmation'
 
 const router = createBrowserRouter([
   {
@@ -58,6 +60,14 @@ const router = createBrowserRouter([
   {
     path: '/cart',
     element: <Cart />,
+  },
+  {
+    path: '/payment',
+    element: <Payment />,
+  },
+  {
+    path: '/confirmation',
+    element: <Confirmation />,
   }
 ])
 

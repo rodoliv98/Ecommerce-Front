@@ -55,45 +55,53 @@ const Cart = () => {
                     Home
                 </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <div className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
                 {cartItems.length === 0 ? (
                     <p className="text-white">No items in cart</p>
                 ) : (
                     cartItems.map(item => (
-                        <div key={item._id} className="bg-gray-800 p-6 rounded-lg shadow-lg">
+                        <div key={item._id} className="border-b border-gray-700 pb-4 mb-4">
                             <h2 className="text-xl font-bold text-white mb-2">{item.item}</h2>
                             <p className="text-lg font-semibold text-white">Price: R${item.price}</p>
                             <p className="text-lg font-semibold text-white">Subtotal: R${(item.price * item.quantity).toFixed(2)}</p>
                             <div className="flex items-center justify-between mt-4">
+                                <div className="flex items-center space-x-4">
+                                    <button
+                                        onClick={() => handleDecreaseQuantity(item._id)}
+                                        className="bg-white text-black p-2 rounded"
+                                    >
+                                        -
+                                    </button>
+                                    <span className="text-white text-center w-8">{item.quantity}</span>
+                                    <button
+                                        onClick={() => handleIncreaseQuantity(item._id)}
+                                        className="bg-white text-black p-2 rounded"
+                                    >
+                                        +
+                                    </button>
+                                </div>
                                 <button
-                                    onClick={() => handleDecreaseQuantity(item._id)}
-                                    className="bg-white text-black p-2 rounded"
+                                    onClick={() => handleRemoveFromCart(item._id)}
+                                    className="bg-red-500 text-white p-2 rounded hover:bg-red-600 active:bg-red-700 w-10"
                                 >
-                                    -
-                                </button>
-                                <span className="text-white mx-4">{item.quantity}</span>
-                                <button
-                                    onClick={() => handleIncreaseQuantity(item._id)}
-                                    className="bg-white text-black p-2 rounded"
-                                >
-                                    +
+                                    <img src="trash.svg" alt="trash icon" className="h-5 w-5 mx-auto" />
                                 </button>
                             </div>
-                            <button
-                                onClick={() => handleRemoveFromCart(item._id)}
-                                className="mt-4 w-full bg-red-500 text-white p-2 rounded hover:bg-red-600 active:bg-red-700"
-                            >
-                                Remove from Cart
-                            </button>
                         </div>
                     ))
                 )}
+                {cartItems.length > 0 && (
+                    <div className="mt-8 flex items-center justify-between">
+                        <h2 className="text-2xl font-bold text-white">Total: R${calculateTotal().toFixed(2)}</h2>
+                        <Link
+                            to="/payment"
+                            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 active:bg-green-700"
+                        >
+                            Pay Now
+                        </Link>
+                    </div>
+                )}
             </div>
-            {cartItems.length > 0 && (
-                <div className="mt-8 bg-gray-800 p-6 rounded-lg shadow-lg">
-                    <h2 className="text-2xl font-bold text-white">Total: R${calculateTotal().toFixed(2)}</h2>
-                </div>
-            )}
         </div>
     );
 };
