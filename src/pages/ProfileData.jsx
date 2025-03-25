@@ -16,14 +16,12 @@ const ProfileData = () => {
         const getData = async () => {
             try {
                 const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/profile');
-                console.log(response.data);
                 setProfile({
                     fullName: response.data.findProfile.fullName,
                     birthDate: response.data.findProfile.birthDate,
                     cpf: response.data.findProfile.cpf
                 });
             } catch (error) {
-                console.error('Error fetching profile data:', error);
                 if(error.response.data === 'Not found'){
                     setEmpty({
                         fullName: '',

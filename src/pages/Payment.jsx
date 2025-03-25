@@ -23,12 +23,11 @@ const Payment = () => {
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/cart');
+                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
                 setCartItems(response.data);
                 const totalCost = response.data.reduce((sum, item) => sum + item.price * item.quantity, 0);
                 setTotal(totalCost);
             } catch (error) {
-                console.error('Error fetching cart items:', error);
                 if (error.response?.data === 'Unauthorized') navigate('/login');
             }
         };
@@ -100,7 +99,7 @@ const Payment = () => {
                     quantity: item.quantity,
                 })),
             };
-            const response = await axios.post('http://localhost:3000/cart/payment', payload);
+            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/cart/payment', payload);
             if (response.data.purchaseID) {
                 navigate('/confirmation', { state: { purchaseId: response.data.purchaseID } });
             }

@@ -20,27 +20,44 @@ const Cart = () => {
         fetchCartItems();
     }, []);
 
-    const handleRemoveFromCart = (productId) => {
-        setCartItems(cartItems.filter(item => item._id !== productId));
+    const handleRemoveFromCart = async (productId) => {
+        try {
+            await axios.delete(`https://e-commerce-api-akwz.onrender.com/cart`, { data: { productId } });
+            setCartItems(cartItems.filter(item => item._id !== productId));
+        } catch (error) {
+            console.error('Error removing item from cart:', error);
+        }
     };
 
-    const handleDecreaseQuantity = (productId) => {
-        setCartItems(cartItems => {
+    const handleDecreaseQuantity = async (productId) => {
+        try {
             const updatedCart = cartItems.map(item =>
                 item._id === productId
                     ? { ...item, quantity: item.quantity - 1 }
                     : item
             ).filter(item => item.quantity > 0);
-            return updatedCart;
-        });
+
+            const updatedItem = updatedCart.find(item => item._id === productId);
+            if (updatedItem) {
+                await axios.patch(`https://e-commerce-api-akwz.onrender.com/cart/decrease`, { productId });
+            }
+
+            setCartItems(updatedCart);
+        } catch (error) {
+            console.error('Error updating item quantity:', error);
+        }
     };
 
-    const handleIncreaseQuantity = (productId) => {
-        setCartItems(cartItems.map(item =>
-            item._id === productId && item.quantity < 10
-                ? { ...item, quantity: item.quantity + 1 }
-                : item
-        ));
+    const handleIncreaseQuantity = async (productId) => {
+        try {
+            const response = await axios.patch(`https://e-commerce-api-akwz.onrender.com/cart/increase`, { productId });
+            const updatedCart = cartItems.map(item =>
+                item._id === productId ? { ...item, quantity: response.data.product.quantity } : item
+            );
+            setCartItems(updatedCart);
+        } catch (error) {
+            console.error('Error updating item quantity:', error);
+        }
     };
 
     const calculateTotal = () => {

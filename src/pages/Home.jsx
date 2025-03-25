@@ -12,10 +12,9 @@ const Home = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/products');
+                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/products');
                 setProducts(response.data.products || response.data);
             } catch (error) {
-                console.error('Error fetching products:', error);
                 setError('Failed to fetch products');
             } finally {
                 setLoading(false);
@@ -31,9 +30,8 @@ const Home = () => {
 
     const handleAddToCart = async (productId) => {
         try {
-            await axios.post('http://localhost:3000/cart', { productId });
+            await axios.post('https://e-commerce-api-akwz.onrender.com/cart', { productId });
         } catch (error) {
-            console.error(error)
             if (error.response.data === 'Unauthorized') return redirectUser('/login');
         }
     };
