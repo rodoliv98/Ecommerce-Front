@@ -175,9 +175,6 @@ const Home = () => {
                                     <Link to="/profile" className="block px-4 py-2 text-black hover:bg-gray-300">
                                         Profile
                                     </Link>
-                                    <Link to="/admin" className="block px-4 py-2 text-black hover:bg-gray-300">
-                                        Admin Panel
-                                    </Link>
                                     {isLoggedIn ? (
                                         <button
                                             onClick={handleLogout}
