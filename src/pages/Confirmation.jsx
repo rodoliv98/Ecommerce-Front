@@ -13,11 +13,11 @@ const Confirmation = () => {
     }, [location.state]);
 
     return (
-        <div className="min-h-screen bg-gray-900 flex items-center justify-center p-8">
-            <div className="bg-gray-800 p-6 rounded-lg shadow-lg max-w-md w-full text-center">
-                <h1 className="text-2xl font-bold text-white mb-4">Purchase Confirmation</h1>
+        <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 flex items-center justify-center p-8">
+            <div className="bg-white p-6 rounded-lg shadow-2xl max-w-md w-full text-center">
+                <h1 className="text-3xl font-bold text-black mb-6">Purchase Confirmation</h1>
                 {purchaseId ? (
-                    <p className="text-lg text-white">
+                    <p className="text-lg text-black">
                         Thank you for your purchase! Your purchase ID is:
                         <span className="block text-blue-500 font-bold mt-2">{purchaseId}</span>
                     </p>
@@ -26,7 +26,7 @@ const Confirmation = () => {
                 )}
                 <Link
                     to="/"
-                    className="mt-6 inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 active:bg-blue-700"
+                    className="mt-6 inline-block bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200"
                 >
                     Go to Home
                 </Link>

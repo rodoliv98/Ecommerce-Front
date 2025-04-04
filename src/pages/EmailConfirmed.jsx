@@ -24,26 +24,36 @@ const EmailConfirmed = () => {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-900">
+            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300">
                 <div className="flex flex-col items-center">
                     <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
-                    <p className="text-white mt-4">Loading...</p>
+                    <p className="text-black mt-4">Loading...</p>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="relative flex items-center justify-center min-h-screen bg-gray-900">
-            <Link to="/" className="absolute top-4 left-4 px-4 py-2 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                Home
-            </Link>
-            <Link to="/login" className="absolute top-4 right-4 px-4 py-2 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                Login
-            </Link>
-            <div className="bg-gray-800 p-8 rounded shadow-md w-full max-w-md">
-                <h1 className="text-2xl font-bold text-center text-white mb-6">Email Confirmation</h1>
-                <p className="text-center text-white">{message}</p>
+        <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 flex items-center justify-center p-8">
+            <div className="bg-white p-6 rounded-lg shadow-2xl max-w-md w-full text-center">
+                <h1 className="text-3xl font-bold text-black mb-6">Email Confirmation</h1>
+                <p className={`text-lg ${message === 'Error confirming email' ? 'text-black' : 'text-black'}`}>
+                    {message}
+                </p>
+                <div className="mt-6 flex justify-between">
+                    <Link
+                        to="/"
+                        className="bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200"
+                    >
+                        Home
+                    </Link>
+                    <Link
+                        to="/login"
+                        className="bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200"
+                    >
+                        Login
+                    </Link>
+                </div>
             </div>
         </div>
     );

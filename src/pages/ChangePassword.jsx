@@ -1,64 +1,89 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useLocation, Link } from 'react-router-dom';
 
 const ChangePassword = () => {
-    const [password, setPassword] = useState('');
+    const [formData, setFormData] = useState({
+        password: '',
+        confirmPassword: '',
+    });
     const [message, setMessage] = useState('');
-    const location = useLocation();
-    const token = new URLSearchParams(location.search).get('token');
+    const [error, setError] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e) => {
-        setPassword(e.target.value);
+        const { name, value } = e.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.password !== formData.confirmPassword) {
+            setError('New passwords do not match.');
+            return;
+        }
+        setError('');
+        setMessage('');
+        setIsSubmitting(true);
         try {
-            const response = await axios.post(`https://e-commerce-api-akwz.onrender.com/register/new-password?token=${token}`, { password });
-            setMessage(response.data);
-        } catch (error) {
-            setMessage('Error changing password');
+            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/register/new-password', { password: formData.password });
+            setMessage(response.data.message || 'Password changed successfully!');
+        } catch (err) {
+            setError(err.response?.data || 'Failed to change password.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     return (
-        <div className="relative flex items-center justify-center min-h-screen bg-gray-900">
-            <Link to="/" className="absolute top-4 left-4 px-4 py-2 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                Home
-            </Link>
-            <Link to="/login" className="absolute top-4 right-4 px-4 py-2 font-medium text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                Login
-            </Link>
-            <div className="bg-gray-800 p-8 rounded shadow-md w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6 text-center text-white">Change Password</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label className="block text-white text-sm font-bold mb-2" htmlFor="password">
-                            New Password
-                        </label>
+        <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 flex items-center justify-center p-8">
+            <div className="bg-white p-6 rounded-lg shadow-2xl max-w-md w-full">
+                <h2 className="text-3xl font-bold text-black text-center mb-6">Change Password</h2>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                        <label htmlFor="password" className="block text-black font-semibold mb-2">New Password:</label>
                         <input
                             type="password"
                             id="password"
-                            value={password}
+                            name="password"
+                            value={formData.password}
                             onChange={handleChange}
-                            className="shadow appearance-none text-white border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
                             required
+                            className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         />
                     </div>
-                    <div className="flex items-center justify-between">
-                        <button
-                            type="submit"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                        >
-                            Change Password
-                        </button>
-                        {message && <p className="ml-4 text-center text-white">{message}</p>}
+                    <div>
+                        <label htmlFor="confirmPassword" className="block text-black font-semibold mb-2">Confirm New Password:</label>
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            required
+                            className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+                        />
                     </div>
+                    <button
+                        type="submit"
+                        className="w-full bg-blue-800 text-white p-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200"
+                        disabled={isSubmitting}
+                    >
+                        Change Password
+                    </button>
+                    {isSubmitting && (
+                        <div className="flex justify-center mt-4">
+                            <div className="w-6 h-6 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+                        </div>
+                    )}
                 </form>
+                {message && <p className="text-black mt-4 text-center">{message}</p>}
+                {error && <p className="text-red-500 mt-4 text-center">{error}</p>}
             </div>
         </div>
     );
 };
 
-export default ChangePassword
+export default ChangePassword;

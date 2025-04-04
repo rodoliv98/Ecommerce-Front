@@ -11,6 +11,7 @@ const Addresses = () => {
         street: '',
         houseNumber: ''
     });
+    const [update, setUpdate] = useState(0);
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -23,8 +24,8 @@ const Addresses = () => {
             }
         };
         fetchAddresses();
-    }, [addresses]);
-
+    }, [update]);
+   
     const handleChange = (e) => {
         const { name, value } = e.target;
         setNewAddress(prevState => ({
@@ -35,12 +36,14 @@ const Addresses = () => {
 
     const handleAddressChange = (index, e) => {
         const { name, value } = e.target;
-        const updatedAddresses = [...addresses];
-        updatedAddresses[index] = {
-            ...updatedAddresses[index],
-            [name]: value
-        };
-        setAddresses(updatedAddresses);
+        setAddresses(prevAddresses => {
+            const updatedAddresses = [...prevAddresses];
+            updatedAddresses[index] = {
+                ...updatedAddresses[index],
+                [name]: value,
+            };
+            return updatedAddresses;
+        });
     };
 
     const handleSubmit = async (e) => {
@@ -55,7 +58,9 @@ const Addresses = () => {
                 street: '',
                 houseNumber: ''
             });
+            setUpdate(Math.random());
         } catch (error) {
+            console.log(error)
             setError('There was an error adding the address. Please try again.');
         }
     };
@@ -63,8 +68,9 @@ const Addresses = () => {
     const handleUpdate = async (index) => {
         try {
             const address = addresses[index];
-            await axios.patch(`https://e-commerce-api-akwz.onrender.com/user/address/${address.id}`, address);
+            await axios.patch(`https://e-commerce-api-akwz.onrender.com/user/address/${address._id}`, address);
         } catch (error) {
+            console.log(error)
             setError('There was an error updating the address. Please try again.');
         }
     };
@@ -80,17 +86,17 @@ const Addresses = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 p-8 flex flex-col items-center">
+        <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 p-8 flex flex-col items-center">
             <div className="w-full max-w-4xl mb-8 flex justify-between">
-                <Link to="/" className="absolute top-4 left-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 active:bg-blue-700">
+                <Link to="/" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 active:bg-blue-700 transition duration-200">
                     Home
                 </Link>
-                <Link to="/profile" className="absolute top-4 right-4 bg-blue-500 text-white p-2 rounded hover:bg-blue-600 active:bg-blue-700">
+                <Link to="/profile" className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 active:bg-gray-900 transition duration-200">
                     Profile
                 </Link>
             </div>
-            <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md mb-8">
-                <h2 className="text-2xl font-bold text-center text-white mb-4">Add New Address</h2>
+            <div className="bg-white p-6 rounded-lg shadow-2xl w-full max-w-md mb-8">
+                <h2 className="text-2xl font-bold text-center text-black mb-4">Add New Address</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <input
                         type="text"
@@ -99,7 +105,7 @@ const Addresses = () => {
                         onChange={handleChange}
                         placeholder="Country"
                         required
-                        className="bg-gray-700 w-full text-white px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                     />
                     <input
                         type="text"
@@ -108,7 +114,7 @@ const Addresses = () => {
                         onChange={handleChange}
                         placeholder="State"
                         required
-                        className="bg-gray-700 w-full text-white px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                     />
                     <input
                         type="text"
@@ -117,7 +123,7 @@ const Addresses = () => {
                         onChange={handleChange}
                         placeholder="City"
                         required
-                        className="bg-gray-700 w-full text-white px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                     />
                     <input
                         type="text"
@@ -126,7 +132,7 @@ const Addresses = () => {
                         onChange={handleChange}
                         placeholder="Street"
                         required
-                        className="bg-gray-700 w-full text-white px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                     />
                     <input
                         type="text"
@@ -135,85 +141,85 @@ const Addresses = () => {
                         onChange={handleChange}
                         placeholder="House Number"
                         required
-                        className="bg-gray-700 w-full text-white px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                     />
-                    <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 active:bg-blue-700">
+                    <button type="submit" className="w-full bg-blue-800 text-white p-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200">
                         Add Address
                     </button>
                 </form>
-                {error && <p className="mt-4 text-center text-white">{error}</p>}
+                {error && <p className="mt-4 text-center text-red-500">{error}</p>}
             </div>
             <div className="w-full max-w-4xl">
-                <h1 className="text-3xl font-bold text-center text-white mb-6">Addresses</h1>
+                <h1 className="text-3xl font-bold text-center text-black mb-6">Addresses</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4">
                     {addresses.length > 0 ? addresses.map((address, index) => (
-                        <div key={index} className="bg-gray-800 p-8 rounded-lg shadow-lg space-y-2">
+                        <div key={index} className="bg-white p-6 rounded-lg shadow-lg space-y-4">
                             <div className="flex items-center">
-                                <label className="text-white w-32">Country:</label>
+                                <label className="text-black font-semibold w-32">Country:</label>
                                 <input
                                     type="text"
                                     name="country"
                                     value={address.country}
                                     onChange={(e) => handleAddressChange(index, e)}
-                                    className="bg-gray-700 w-full text-white px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                                 />
                             </div>
                             <div className="flex items-center">
-                                <label className="text-white w-32">State:</label>
+                                <label className="text-black font-semibold w-32">State:</label>
                                 <input
                                     type="text"
                                     name="state"
                                     value={address.state}
                                     onChange={(e) => handleAddressChange(index, e)}
-                                    className="bg-gray-700 w-full text-white px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                                 />
                             </div>
                             <div className="flex items-center">
-                                <label className="text-white w-32">City:</label>
+                                <label className="text-black font-semibold w-32">City:</label>
                                 <input
                                     type="text"
                                     name="city"
                                     value={address.city}
                                     onChange={(e) => handleAddressChange(index, e)}
-                                    className="bg-gray-700 w-full text-white px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                                 />
                             </div>
                             <div className="flex items-center">
-                                <label className="text-white w-32">Street:</label>
+                                <label className="text-black font-semibold w-32">Street:</label>
                                 <input
                                     type="text"
                                     name="street"
                                     value={address.street}
                                     onChange={(e) => handleAddressChange(index, e)}
-                                    className="bg-gray-700 w-full text-white px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                                 />
                             </div>
                             <div className="flex items-center">
-                                <label className="text-white w-32">House Nº:</label>
+                                <label className="text-black font-semibold w-32">House Nº:</label>
                                 <input
                                     type="text"
                                     name="houseNumber"
                                     value={address.houseNumber}
                                     onChange={(e) => handleAddressChange(index, e)}
-                                    className="bg-gray-700 w-full text-white px-3 py-2 border rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                                    className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                                 />
                             </div>
                             <div className="flex justify-between">
                                 <button
                                     onClick={() => handleUpdate(index)}
-                                    className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 active:bg-blue-700"
+                                    className="bg-blue-800 text-white p-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200"
                                 >
                                     Update
                                 </button>
                                 <button
                                     onClick={() => handleDelete(index)}
-                                    className="bg-red-500 text-white p-2 rounded hover:bg-red-600 active:bg-red-700 flex items-center justify-center"
+                                    className="bg-red-500 text-white p-2 rounded hover:bg-red-600 active:bg-red-700 transition duration-200 flex items-center justify-center"
                                 >
                                     <img src="trash.svg" alt="delete" className="h-5 w-5" />
                                 </button>
                             </div>
                         </div>
-                    )) : <p className="text-white">No addresses found</p>}
+                    )) : <p className="text-black text-center">No addresses found</p>}
                 </div>
             </div>
         </div>

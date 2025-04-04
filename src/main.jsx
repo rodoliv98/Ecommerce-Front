@@ -15,11 +15,36 @@ import Addresses from './pages/Addresses'
 import Cart from './pages/Cart'
 import Payment from './pages/Payment'
 import Confirmation from './pages/Confirmation'
+import UploadImage from './pages/UploadImage'
+import AdminPanel from './pages/AdminPanel'
+import CreateProduct from './pages/CreateProduct'
+import UpdateProduct from './pages/UpdateProduct'
+import DeleteProduct from './pages/DeleteProduct'
 
 const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />,
+  },
+  {
+    path: '/admin',
+    element: <AdminPanel />
+  },
+  {
+    path: '/admin/create-product',
+    element: <CreateProduct /> 
+  },
+  {
+    path: '/admin/update-product',
+    element: <UpdateProduct />
+  },
+  {
+    path: '/admin/delete-product',
+    element: <DeleteProduct />
+  },
+  {
+    path: '/admin/upload-image',
+    element: <UploadImage />
   },
   {
     path: '/forgot-password',
@@ -68,7 +93,7 @@ const router = createBrowserRouter([
   {
     path: '/confirmation',
     element: <Confirmation />,
-  }
+  },
 ])
 
 createRoot(document.getElementById('root')).render(
