@@ -17,7 +17,7 @@ const ProductDetails = () => {
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/products/${productId}`);
+                const response = await axios.get(`https://e-commerce-api-akwz.onrender.com/products/${productId}`);
                 setProduct(response.data.product);
             } catch (err) {
                 setError('Failed to fetch product details');
@@ -32,7 +32,7 @@ const ProductDetails = () => {
     useEffect(() => {
         const fetchCartCount = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/cart');
+                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
                 setCartCount(response.data.length);
             } catch (error) {
                 console.error('Error fetching cart count:', error);
@@ -44,7 +44,7 @@ const ProductDetails = () => {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user/status', { withCredentials: true });
+                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/status', { withCredentials: true });
                 setIsLoggedIn(response.data);
             } catch {
                 setIsLoggedIn(false);
@@ -65,7 +65,7 @@ const ProductDetails = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
+            await axios.post('https://e-commerce-api-akwz.onrender.com/logout', {}, { withCredentials: true });
             setIsLoggedIn(false);
             setIsMenuOpen(false);
         } catch (error) {
@@ -77,7 +77,7 @@ const ProductDetails = () => {
 
     const handleAddToCart = async (productId) => {
         try {
-            const response = await axios.post('http://localhost:3000/cart', { productId });
+            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/cart', { productId });
             if (response.data.msg === 'Product added to the cart') {
                 setCartCount(cartCount + 1);
             }

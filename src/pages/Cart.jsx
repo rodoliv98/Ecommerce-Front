@@ -10,7 +10,7 @@ const Cart = () => {
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/cart');
+                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
                 setCartItems(response.data);
             } catch (error) {
                 if (error.response.data === 'Unauthorized') return redirectUser('/login');
@@ -22,7 +22,7 @@ const Cart = () => {
 
     const handleRemoveFromCart = async (productId) => {
         try {
-            await axios.delete(`http://localhost:3000/cart`, { data: { productId } });
+            await axios.delete(`https://e-commerce-api-akwz.onrender.com/cart`, { data: { productId } });
             setCartItems(prevCartItems => prevCartItems.filter(item => item._id !== productId));
         } catch (error) {
             console.error('Error removing item from cart:', error);
@@ -33,7 +33,7 @@ const Cart = () => {
         try {
             setCartItems(prevCartItems => prevCartItems.map(item => item._id === productId ? { ...item, quantity: item.quantity - 1 } : item)
                                                        .filter(item => item.quantity > 0));
-            await axios.patch(`http://localhost:3000/cart/decrease`, { productId });
+            await axios.patch(`https://e-commerce-api-akwz.onrender.com/cart/decrease`, { productId });
         } catch (error) {
             console.error('Error updating item quantity:', error);
         }
@@ -42,7 +42,7 @@ const Cart = () => {
     const handleIncreaseQuantity = async (productId) => {
         try {
             setCartItems(prevCartItems => prevCartItems.map(item => item._id === productId ? { ...item, quantity: item.quantity + 1 } : item));
-            await axios.patch(`http://localhost:3000/cart/increase`, { productId });
+            await axios.patch(`https://e-commerce-api-akwz.onrender.com/cart/increase`, { productId });
             console.log(cartItems)
         } catch (error) {
             console.error('Error updating item quantity:', error);

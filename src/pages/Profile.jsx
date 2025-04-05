@@ -13,7 +13,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user');
+                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user');
                 setUserData(response.data);
             } catch (err) {
                 if(err.response.data === 'Unauthorized'){
