@@ -17,7 +17,7 @@ const Home = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/products');
+                const response = await axios.get('http://localhost:3000/products');
                 setProducts(response.data.products || response.data);
             } catch (error) {
                 setError('Failed to fetch products');
@@ -28,7 +28,7 @@ const Home = () => {
 
         const fetchCartCount = async () => {
             try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
+                const response = await axios.get('http://localhost:3000/cart');
                 setCartCount(response.data.length);
             } catch (error) {
             }
@@ -41,7 +41,7 @@ const Home = () => {
     useEffect(() => {
         const checkLoginStatus = async () => {
             try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/status', { withCredentials: true });
+                const response = await axios.get('http://localhost:3000/user/status', { withCredentials: true });
                 setIsLoggedIn(response.data);
             } catch {
                 setIsLoggedIn(false);
@@ -70,7 +70,7 @@ const Home = () => {
 
     const handleAddToCart = async (productId) => {
         try {
-            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/cart', { productId });
+            const response = await axios.post('http://localhost:3000/cart', { productId });
             if(response.data.msg === 'Product added to the cart'){
                 setCartCount(cartCount + 1);
             }
@@ -81,7 +81,7 @@ const Home = () => {
 
     const handleLogout = async () => {
         try {
-            await axios.post('https://e-commerce-api-akwz.onrender.com/logout', {}, { withCredentials: true });
+            await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
             setIsLoggedIn(false);
             setIsMenuOpen(false);
         } catch (error) {
@@ -234,7 +234,7 @@ const Home = () => {
                         <div key={product._id} className="w-72 mx-auto">
                             <div 
                                 className="w-full h-96 flex items-center justify-center rounded-t-lg cursor-pointer" 
-                                onClick={() => handleAddToCart(product._id)}
+                                onClick={() => redirectUser(`/product/${product._id}`)}
                             >
                                 <img 
                                     src={product.imagePath} 

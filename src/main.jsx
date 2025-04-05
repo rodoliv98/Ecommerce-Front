@@ -20,80 +20,28 @@ import AdminPanel from './pages/AdminPanel'
 import CreateProduct from './pages/CreateProduct'
 import UpdateProduct from './pages/UpdateProduct'
 import DeleteProduct from './pages/DeleteProduct'
+import ProductDetails from './pages/ProductDetails'
 
 const router = createBrowserRouter([
-  {
-    path: '/login',
-    element: <Login />,
-  },
-  {
-    path: '/admin',
-    element: <AdminPanel />
-  },
-  {
-    path: '/admin/create-product',
-    element: <CreateProduct /> 
-  },
-  {
-    path: '/admin/update-product',
-    element: <UpdateProduct />
-  },
-  {
-    path: '/admin/delete-product',
-    element: <DeleteProduct />
-  },
-  {
-    path: '/admin/upload-image',
-    element: <UploadImage />
-  },
-  {
-    path: '/forgot-password',
-    element: <Recovery />,
-  },
-  {
-    path: '/change-password',
-    element: <ChangePassword />,
-  },
-  {
-    path: '/register',
-    element: <Register />,
-  },
-  {
-    path: '/',
-    element: <Home />,
-  },
-  {
-    path: '/profile',
-    element: <Profile />,
-  },
-  {
-    path: '/profile-data',
-    element: <ProfileData />,
-  },
-  {
-    path: '/my-orders',
-    element: <Purchases />,
-  },
-  {
-    path: '/verify-email',
-    element: <EmailConfirmed />,
-  },
-  {
-    path: '/profile-address',
-    element: <Addresses />,
-  },
-  {
-    path: '/cart',
-    element: <Cart />,
-  },
-  {
-    path: '/payment',
-    element: <Payment />,
-  },
-  {
-    path: '/confirmation',
-    element: <Confirmation />,
-  },
+  { path: '/login', element: <Login /> },
+  { path: '/product/:productId', element: <ProductDetails /> },
+  { path: '/admin', element: <AdminPanel /> },
+  { path: '/admin/create-product', element: <CreateProduct /> },
+  { path: '/admin/update-product', element: <UpdateProduct /> },
+  { path: '/admin/delete-product', element: <DeleteProduct /> },
+  { path: '/admin/upload-image', element: <UploadImage /> },
+  { path: '/forgot-password', element: <Recovery /> },
+  { path: '/change-password', element: <ChangePassword /> },
+  { path: '/register', element: <Register /> },
+  { path: '/', element: <Home /> },
+  { path: '/profile', element: <Profile /> },
+  { path: '/profile-data', element: <ProfileData /> },
+  { path: '/my-orders', element: <Purchases /> },
+  { path: '/verify-email', element: <EmailConfirmed /> },
+  { path: '/profile-address', element: <Addresses /> },
+  { path: '/cart', element: <Cart /> },
+  { path: '/payment', element: <Payment /> },
+  { path: '/confirmation', element: <Confirmation /> },
 ])
 
 createRoot(document.getElementById('root')).render(
