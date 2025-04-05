@@ -27,7 +27,7 @@ const EmailConfirmed = () => {
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300">
                 <div className="flex flex-col items-center">
                     <div className="w-16 h-16 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
-                    <p className="text-black mt-4">Loading...</p>
+                    <p className="text-black mt-4">Carregando...</p>
                 </div>
             </div>
         );
@@ -36,7 +36,7 @@ const EmailConfirmed = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 flex items-center justify-center p-8">
             <div className="bg-white p-6 rounded-lg shadow-2xl max-w-md w-full text-center">
-                <h1 className="text-3xl font-bold text-black mb-6">Email Confirmation</h1>
+                <h1 className="text-3xl font-bold text-black mb-6">Confirmação de email</h1>
                 <p className={`text-lg ${message === 'Error confirming email' ? 'text-black' : 'text-black'}`}>
                     {message}
                 </p>

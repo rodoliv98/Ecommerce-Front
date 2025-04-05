@@ -95,7 +95,7 @@ const ProductDetails = () => {
             <div className="min-h-screen flex items-center justify-center bg-white">
                 <div className="flex flex-col items-center">
                     <div className="w-16 h-16 border-4 border-black border-dashed rounded-full animate-spin"></div>
-                    <p className="text-black mt-4">Loading...</p>
+                    <p className="text-black mt-4">Carregando...</p>
                 </div>
             </div>
         );
@@ -117,7 +117,7 @@ const ProductDetails = () => {
                         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
-                        Back to Home
+                        Voltar para a loja
                     </Link>
                     
                     <Link to="/" className="text-3xl font-bold text-black">R-Store</Link>
@@ -143,7 +143,7 @@ const ProductDetails = () => {
                             </button>
                             {isMenuOpen && (
                                 <div className="absolute right-0 mt-2 w-48 bg-gray-200 rounded shadow-lg">
-                                    <Link to="/profile" className="block px-4 py-2 text-black hover:bg-gray-300">Profile</Link>
+                                    <Link to="/profile" className="block px-4 py-2 text-black hover:bg-gray-300">Perfil</Link>
                                     {isLoggedIn ? (
                                         <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-black hover:bg-gray-300">
                                             Logout
@@ -212,13 +212,13 @@ const ProductDetails = () => {
                                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                                         </svg>
-                                        <span>Free Shipping</span>
+                                        <span>Entrega grátis</span>
                                     </div>
                                     <div className="flex items-center space-x-2 text-gray-600">
                                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
-                                        <span>24/7 Support</span>
+                                        <span>Suporte 24 horas</span>
                                     </div>
                                 </div>
 
@@ -229,7 +229,7 @@ const ProductDetails = () => {
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                     </svg>
-                                    <span>Add to Cart</span>
+                                    <span>Adicionar ao carrinho</span>
                                 </button>
                             </div>
                         </div>

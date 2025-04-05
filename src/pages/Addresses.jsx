@@ -92,18 +92,18 @@ const Addresses = () => {
                     Home
                 </Link>
                 <Link to="/profile" className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700 active:bg-gray-900 transition duration-200">
-                    Profile
+                    Perfil
                 </Link>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-2xl w-full max-w-md mb-8">
-                <h2 className="text-2xl font-bold text-center text-black mb-4">Add New Address</h2>
+                <h2 className="text-2xl font-bold text-center text-black mb-4">Adicione um novo endereço</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <input
                         type="text"
                         name="country"
                         value={newAddress.country}
                         onChange={handleChange}
-                        placeholder="Country"
+                        placeholder="País"
                         required
                         className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                     />
@@ -112,7 +112,7 @@ const Addresses = () => {
                         name="state"
                         value={newAddress.state}
                         onChange={handleChange}
-                        placeholder="State"
+                        placeholder="Estado"
                         required
                         className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                     />
@@ -121,7 +121,7 @@ const Addresses = () => {
                         name="city"
                         value={newAddress.city}
                         onChange={handleChange}
-                        placeholder="City"
+                        placeholder="Cidade"
                         required
                         className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                     />
@@ -130,7 +130,7 @@ const Addresses = () => {
                         name="street"
                         value={newAddress.street}
                         onChange={handleChange}
-                        placeholder="Street"
+                        placeholder="Rua"
                         required
                         className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                     />
@@ -139,23 +139,23 @@ const Addresses = () => {
                         name="houseNumber"
                         value={newAddress.houseNumber}
                         onChange={handleChange}
-                        placeholder="House Number"
+                        placeholder="Número da casa"
                         required
                         className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                     />
                     <button type="submit" className="w-full bg-blue-800 text-white p-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200">
-                        Add Address
+                        Adicionar
                     </button>
                 </form>
                 {error && <p className="mt-4 text-center text-red-500">{error}</p>}
             </div>
             <div className="w-full max-w-4xl">
-                <h1 className="text-3xl font-bold text-center text-black mb-6">Addresses</h1>
+                <h1 className="text-3xl font-bold text-center text-black mb-6">Endereços</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-4">
                     {addresses.length > 0 ? addresses.map((address, index) => (
                         <div key={index} className="bg-white p-6 rounded-lg shadow-lg space-y-4">
                             <div className="flex items-center">
-                                <label className="text-black font-semibold w-32">Country:</label>
+                                <label className="text-black font-semibold w-32">País:</label>
                                 <input
                                     type="text"
                                     name="country"
@@ -165,7 +165,7 @@ const Addresses = () => {
                                 />
                             </div>
                             <div className="flex items-center">
-                                <label className="text-black font-semibold w-32">State:</label>
+                                <label className="text-black font-semibold w-32">Estado:</label>
                                 <input
                                     type="text"
                                     name="state"
@@ -175,7 +175,7 @@ const Addresses = () => {
                                 />
                             </div>
                             <div className="flex items-center">
-                                <label className="text-black font-semibold w-32">City:</label>
+                                <label className="text-black font-semibold w-32">Cidade:</label>
                                 <input
                                     type="text"
                                     name="city"
@@ -185,7 +185,7 @@ const Addresses = () => {
                                 />
                             </div>
                             <div className="flex items-center">
-                                <label className="text-black font-semibold w-32">Street:</label>
+                                <label className="text-black font-semibold w-32">Rua:</label>
                                 <input
                                     type="text"
                                     name="street"
@@ -195,7 +195,7 @@ const Addresses = () => {
                                 />
                             </div>
                             <div className="flex items-center">
-                                <label className="text-black font-semibold w-32">House Nº:</label>
+                                <label className="text-black font-semibold w-32">Casa Nº:</label>
                                 <input
                                     type="text"
                                     name="houseNumber"
@@ -209,7 +209,7 @@ const Addresses = () => {
                                     onClick={() => handleUpdate(index)}
                                     className="bg-blue-800 text-white p-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200"
                                 >
-                                    Update
+                                    Atualizar
                                 </button>
                                 <button
                                     onClick={() => handleDelete(index)}
@@ -219,7 +219,7 @@ const Addresses = () => {
                                 </button>
                             </div>
                         </div>
-                    )) : <p className="text-black text-center">No addresses found</p>}
+                    )) : <p className="text-black text-center">Nenhum endereço encontrado</p>}
                 </div>
             </div>
         </div>

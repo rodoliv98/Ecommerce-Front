@@ -57,18 +57,18 @@ const Cart = () => {
         <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 p-8">
             <div className="container mx-auto max-w-4xl bg-white p-6 rounded-lg shadow-2xl">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-3xl font-bold text-black">Your Cart</h1>
+                    <h1 className="text-3xl font-bold text-black">Carrinho</h1>
                     <Link to="/" className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 active:bg-gray-900 transition duration-200">
                         Home
                     </Link>
                 </div>
                 {cartItems.length === 0 ? (
-                    <p className="text-black text-center">Your cart is empty.</p>
+                    <p className="text-black text-center">Seu carrinho está vazio</p>
                 ) : (
                     cartItems.map(item => (
                         <div key={item._id} className="border-b border-gray-300 pb-4 mb-4">
                             <h2 className="text-xl font-bold text-black mb-2">{item.item}</h2>
-                            <p className="text-lg font-semibold text-black">Price: R${item.price}</p>
+                            <p className="text-lg font-semibold text-black">Preço: R${item.price}</p>
                             <p className="text-lg font-semibold text-black">Subtotal: R${(item.price * item.quantity).toFixed(2)}</p>
                             <div className="flex items-center justify-between mt-4">
                                 <div className="flex items-center space-x-4">
@@ -103,7 +103,7 @@ const Cart = () => {
                             to="/payment"
                             className="bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 active:bg-green-700 transition duration-200"
                         >
-                            Proceed to Payment
+                            Pagamento
                         </Link>
                     </div>
                 )}

@@ -29,14 +29,14 @@ const Login = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300">
       <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-3xl font-bold text-black">Welcome Back!</h2>
+          <h2 className="text-3xl font-bold text-black">Bem vindo!</h2>
           <Link to="/" className="bg-blue-800 text-white px-4 py-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200">
             Home
           </Link>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-black font-semibold mb-2" htmlFor="email">Email Address</label>
+            <label className="block text-black font-semibold mb-2" htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
@@ -47,7 +47,7 @@ const Login = () => {
             />
           </div>
           <div>
-            <label className="block text-black font-semibold mb-2" htmlFor="password">Password</label>
+            <label className="block text-black font-semibold mb-2" htmlFor="password">Senha</label>
             <input
               type="password"
               id="password"
@@ -59,20 +59,20 @@ const Login = () => {
           </div>
           <div className="flex justify-between items-center">
             <Link to="/forgot-password" className="text-sm text-gray-600 hover:text-black transition duration-200">
-              Forgot Password?
+              Esqueceu sua senha?
             </Link>
           </div>
           <button
             type="submit"
             className="w-full bg-blue-800 text-white py-2 rounded-md hover:bg-blue-700 active:bg-blue-900 transition duration-200 font-semibold"
           >
-            Login
+            Entrar
           </button>
         </form>
         <div className="mt-6 text-center">
-          <p className="text-gray-600">Don't have an account?</p>
+          <p className="text-gray-600">Não tem uma conta?</p>
           <Link to="/register" className="text-blue-800 font-semibold hover:underline transition duration-200">
-            Register Now
+            Registrar agora
           </Link>
         </div>
         {error && <p className="text-black mt-4 text-center">{error}</p>}

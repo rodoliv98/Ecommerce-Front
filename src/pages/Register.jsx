@@ -48,11 +48,11 @@ const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (formData.password !== formData.confirmPassword) {
-            setMessage('Passwords do not match.');
+            setMessage('As senhas não coincidem.');
             return;
         }
         if (passwordError) {
-            setMessage('Please fix the password requirements.');
+            setMessage('A senha não atende aos requisitos.');
             return;
         }
         setMessage('');
@@ -62,7 +62,7 @@ const Register = () => {
             const { confirmPassword, ...dataToSend } = formData;
             const response = await axios.post('https://e-commerce-api-akwz.onrender.com/register', dataToSend);
             if (response.data === 'Account created') {
-                setMessage('Account created. Please check your email to verify your account.');
+                setMessage('Conta criada com sucesso! Verifique seu email para confirmar.');
             }
         } catch (error) {
             setMessage(error.response.data);
@@ -74,10 +74,10 @@ const Register = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 flex items-center justify-center p-8">
             <div className="bg-white p-6 rounded-lg shadow-2xl max-w-md w-full">
-                <h2 className="text-3xl font-bold text-black text-center mb-6">Register</h2>
+                <h2 className="text-3xl font-bold text-black text-center mb-6">Cadastro</h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label htmlFor="firstName" className="block text-black font-semibold mb-2">First Name:</label>
+                        <label htmlFor="firstName" className="block text-black font-semibold mb-2">Primeiro nome:</label>
                         <input
                             type="text"
                             id="firstName"
@@ -89,7 +89,7 @@ const Register = () => {
                         />
                     </div>
                     <div>
-                        <label htmlFor="lastName" className="block text-black font-semibold mb-2">Last Name:</label>
+                        <label htmlFor="lastName" className="block text-black font-semibold mb-2">Ultimo nome:</label>
                         <input
                             type="text"
                             id="lastName"
@@ -113,7 +113,7 @@ const Register = () => {
                         />
                     </div>
                     <div>
-                        <label htmlFor="password" className="block text-black font-semibold mb-2">Password:</label>
+                        <label htmlFor="password" className="block text-black font-semibold mb-2">Senha:</label>
                         <input
                             type="password"
                             id="password"
@@ -126,7 +126,7 @@ const Register = () => {
                         {passwordError && <p className="text-red-500 mt-2">{passwordError}</p>}
                     </div>
                     <div>
-                        <label htmlFor="confirmPassword" className="block text-black font-semibold mb-2">Confirm Password:</label>
+                        <label htmlFor="confirmPassword" className="block text-black font-semibold mb-2">Confirmar senha:</label>
                         <input
                             type="password"
                             id="confirmPassword"
@@ -142,7 +142,7 @@ const Register = () => {
                         className="w-full bg-blue-800 text-white p-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200"
                         disabled={isSubmitting}
                     >
-                        Register
+                        Registrar
                     </button>
                     {isSubmitting && (
                         <div className="flex justify-center mt-4">
@@ -152,7 +152,7 @@ const Register = () => {
                 </form>
                 {message && <p className="text-black mt-4 text-center">{message}</p>}
                 <div className="mt-6 text-center">
-                    <p className="text-gray-600">Already have an account?</p>
+                    <p className="text-gray-600">Já tem uma conta?</p>
                     <Link to="/login" className="text-blue-800 font-semibold hover:underline transition duration-200">
                         Login
                     </Link>

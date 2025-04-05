@@ -107,7 +107,7 @@ const Home = () => {
             <div className="min-h-screen flex items-center justify-center bg-white">
                 <div className="flex flex-col items-center">
                     <div className="w-16 h-16 border-4 border-black border-dashed rounded-full animate-spin"></div>
-                    <p className="text-black mt-4">Loading...</p>
+                    <p className="text-black mt-4">Carregando...</p>
                 </div>
             </div>
         );
@@ -129,7 +129,7 @@ const Home = () => {
                     <div className="relative w-1/2 mx-4">
                         <input
                             type="text"
-                            placeholder="Search products..."
+                            placeholder="Buscar produtos..."
                             value={searchTerm}
                             onChange={handleSearch}
                             className="w-full p-2 pr-10 rounded text-black placeholder-black border border-black focus:ring-0 focus:border-black"
@@ -173,7 +173,7 @@ const Home = () => {
                             {isMenuOpen && (
                                 <div className="absolute right-0 mt-2 w-48 bg-gray-200 rounded shadow-lg">
                                     <Link to="/profile" className="block px-4 py-2 text-black hover:bg-gray-300">
-                                        Profile
+                                        Perfil
                                     </Link>
                                     {isLoggedIn ? (
                                         <button
@@ -193,12 +193,12 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="flex items-center space-x-4">
-                    <h2 className="text-xl font-bold text-black">Categories:</h2>
+                    <h2 className="text-xl font-bold text-black">Categorias:</h2>
                     <button
                         onClick={() => handleCategoryChange('')}
                         className={`px-4 py-2 rounded ${selectedCategory === '' ? 'bg-blue-500 text-white' : 'text-black hover:bg-gray-300'}`}
                     >
-                        All
+                        Todos
                     </button>
                     <button
                         onClick={() => handleCategoryChange('Blusas')}
@@ -228,7 +228,7 @@ const Home = () => {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                 {filteredProducts.length === 0 ? (
-                    <p className="text-black">No products available</p>
+                    <p className="text-black">Nenhum produto disponível</p>
                 ) : (
                     filteredProducts.map(product => (
                         <div key={product._id} className="w-72 mx-auto">

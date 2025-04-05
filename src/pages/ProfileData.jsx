@@ -91,19 +91,19 @@ const ProfileData = () => {
         <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 flex items-center justify-center p-8">
             <div className="bg-white p-6 rounded-lg shadow-2xl max-w-md w-full">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-3xl font-bold text-black">Profile Data</h1>
+                    <h1 className="text-3xl font-bold text-black">Dados</h1>
                     <div className="flex space-x-4">
                         <Link to="/" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 active:bg-blue-700 transition duration-200">
                             Home
                         </Link>
                         <button onClick={() => navigate(-1)} className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 active:bg-gray-700 transition duration-200">
-                            Previous Page
+                            Página Anterior
                         </button>
                     </div>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label htmlFor="name" className="block text-black font-semibold mb-2">Name:</label>
+                        <label htmlFor="name" className="block text-black font-semibold mb-2">Nome:</label>
                         <input
                             type="text"
                             id="name"
@@ -115,7 +115,7 @@ const ProfileData = () => {
                         />
                     </div>
                     <div>
-                        <label htmlFor="birthDate" className="block text-black font-semibold mb-2">Birthdate:</label>
+                        <label htmlFor="birthDate" className="block text-black font-semibold mb-2">Data de nascimento:</label>
                         <input
                             type="text"
                             id="birthDate"
@@ -144,7 +144,7 @@ const ProfileData = () => {
                         type="submit"
                         className="w-full bg-blue-800 text-white p-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200"
                     >
-                        Save
+                        Salvar
                     </button>
                     {message && <p className="text-black mt-4 text-center">{message}</p>}
                     {errorMessage && <p className="text-red-950 mt-4 text-center">{errorMessage.join(', ')}</p>}

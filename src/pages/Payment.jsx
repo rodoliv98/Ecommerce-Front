@@ -112,22 +112,22 @@ const Payment = () => {
         <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 p-8 flex items-center justify-center">
             <div className="bg-white p-6 rounded-lg shadow-2xl max-w-4xl w-full">
                 <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-3xl font-bold text-black">Payment</h1>
+                    <h1 className="text-3xl font-bold text-black">Pagamento</h1>
                     <Link to="/cart" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 active:bg-blue-700 transition duration-200">
-                        Back to Cart
+                        Voltar para o carrinho
                     </Link>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-6">
-                    <h2 className="text-2xl font-bold text-black mb-4">Personal Information</h2>
+                    <h2 className="text-2xl font-bold text-black mb-4">Informações pessoais</h2>
                     <div>
-                        <label htmlFor="fullName" className="block text-black font-semibold mb-2">Full Name:</label>
+                        <label htmlFor="fullName" className="block text-black font-semibold mb-2">Nome completo:</label>
                         <input
                             type="text"
                             id="fullName"
                             name="fullName"
                             value={formData.fullName}
                             onChange={handleChange}
-                            placeholder="Enter your full name"
+                            placeholder="Nome completo"
                             required
                             className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         />
@@ -140,86 +140,86 @@ const Payment = () => {
                             name="cpf"
                             value={formData.cpf}
                             onChange={handleChange}
-                            placeholder="Enter your CPF"
+                            placeholder="CPF"
                             required
                             className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="birthDate" className="block text-black font-semibold mb-2">Birthdate:</label>
+                        <label htmlFor="birthDate" className="block text-black font-semibold mb-2">Data de nascimento:</label>
                         <input
                             type="text"
                             id="birthDate"
                             name="birthDate"
                             value={formData.birthDate}
                             onChange={handleChange}
-                            placeholder="Enter your birthdate (DD/MM/YYYY)"
+                            placeholder="Data de nascimento"
                             required
                             className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         />
                     </div>
-                    <h2 className="text-2xl font-bold text-black mb-4">Address</h2>
+                    <h2 className="text-2xl font-bold text-black mb-4">Endereço</h2>
                     <div>
-                        <label htmlFor="country" className="block text-black font-semibold mb-2">Country:</label>
+                        <label htmlFor="country" className="block text-black font-semibold mb-2">País:</label>
                         <input
                             type="text"
                             id="country"
                             name="country"
                             value={formData.country}
                             onChange={handleChange}
-                            placeholder="Enter your country"
+                            placeholder="País"
                             required
                             className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="state" className="block text-black font-semibold mb-2">State:</label>
+                        <label htmlFor="state" className="block text-black font-semibold mb-2">Estado:</label>
                         <input
                             type="text"
                             id="state"
                             name="state"
                             value={formData.state}
                             onChange={handleChange}
-                            placeholder="Enter your state"
+                            placeholder="Estado"
                             required
                             className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="city" className="block text-black font-semibold mb-2">City:</label>
+                        <label htmlFor="city" className="block text-black font-semibold mb-2">Cidade:</label>
                         <input
                             type="text"
                             id="city"
                             name="city"
                             value={formData.city}
                             onChange={handleChange}
-                            placeholder="Enter your city"
+                            placeholder="Cidade"
                             required
                             className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="street" className="block text-black font-semibold mb-2">Street:</label>
+                        <label htmlFor="street" className="block text-black font-semibold mb-2">Rua:</label>
                         <input
                             type="text"
                             id="street"
                             name="street"
                             value={formData.street}
                             onChange={handleChange}
-                            placeholder="Enter your street"
+                            placeholder="Rua"
                             required
                             className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="houseNumber" className="block text-black font-semibold mb-2">House Number:</label>
+                        <label htmlFor="houseNumber" className="block text-black font-semibold mb-2">Número da casa:</label>
                         <input
                             type="text"
                             id="houseNumber"
                             name="houseNumber"
                             value={formData.houseNumber || ''}
                             onChange={handleChange}
-                            placeholder="Enter your house number"
+                            placeholder="Número da casa"
                             required
                             className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         />
@@ -232,26 +232,27 @@ const Payment = () => {
                             name="cep"
                             value={formData.cep}
                             onChange={handleChange}
-                            placeholder="Enter your CEP"
+                            placeholder="CEP"
                             required
                             className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         />
                     </div>
-                    <h2 className="text-2xl font-bold text-black mb-4">Payment Details</h2>
+                    <h2 className="text-2xl font-bold text-black mb-4">Forma de pagamento</h2>
                     <div>
-                        <label htmlFor="cardNumber" className="block text-black font-semibold mb-2">Card Number:</label>
+                        <label htmlFor="cardNumber" className="block text-black font-semibold mb-2">Número do cartão de credito:</label>
                         <input
                             type="text"
                             id="cardNumber"
                             name="cardNumber"
                             value={formData.cardNumber}
                             onChange={handleChange}
+                            placeholder='Número do cartão de crédito'
                             required
                             className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         />
                     </div>
                     <div>
-                        <label htmlFor="currency" className="block text-black font-semibold mb-2">Currency:</label>
+                        <label htmlFor="currency" className="block text-black font-semibold mb-2">Moeda:</label>
                         <select
                             id="currency"
                             name="currency"
@@ -266,13 +267,13 @@ const Payment = () => {
                         </select>
                     </div>
                     <div className="mt-6">
-                        <h2 className="text-xl font-bold text-black">Total Cost: R${total.toFixed(2)}</h2>
+                        <h2 className="text-xl font-bold text-black">Total: R${total.toFixed(2)}</h2>
                     </div>
                     <button
                         type="submit"
                         className="w-full bg-blue-800 text-white p-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200"
                     >
-                        Submit Payment
+                        Pagar
                     </button>
                     {error && <p className="text-black mt-4">{error}</p>}
                 </form>
