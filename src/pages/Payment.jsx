@@ -261,8 +261,6 @@ const Payment = () => {
                             required
                             className="w-full text-black bg-gray-200 p-2 rounded border border-gray-300 focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                         >
-                            <option value="USD">USD</option>
-                            <option value="EUR">EUR</option>
                             <option value="BRL">BRL</option>
                         </select>
                     </div>

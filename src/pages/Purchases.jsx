@@ -14,7 +14,6 @@ const Purchases = () => {
                     setPurchases(response.data.historic); 
                 }
             } catch (error) {
-                console.log(error);
                 setError('Failed to fetch purchase history. Please try again later.'); 
             }
         };
