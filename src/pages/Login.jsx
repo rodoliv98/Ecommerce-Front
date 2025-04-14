@@ -21,7 +21,7 @@ const Login = () => {
         redirectUser('/');
       }
     } catch (err) {
-      setError(err.response.data);
+      setError('Ocorreu um erro, tente novamente mais tarde.');
     }
   };
 
