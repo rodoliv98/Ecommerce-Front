@@ -31,7 +31,7 @@ const Register = () => {
                 setPasswordError('');
             } else if (!validatePassword(value)) {
                 setPasswordError(
-                    'Password must contain at least 10 characters, including uppercase, lowercase, a number, and a symbol.'
+                    'A senha deve conter pelo menos 10 caracteres, incluindo letras maiúsculas, números e simbolos.'
                 );
             } else {
                 setPasswordError('');
@@ -65,7 +65,8 @@ const Register = () => {
                 setMessage('Conta criada com sucesso! Verifique seu email para confirmar.');
             }
         } catch (error) {
-            setMessage(error.response.data);
+            console.log(error)
+            setMessage('Ocorreu um erro, tente novamente.');
         } finally {
             setIsSubmitting(false);
         }
