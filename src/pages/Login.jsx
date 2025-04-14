@@ -21,7 +21,6 @@ const Login = () => {
         redirectUser('/');
       }
     } catch (err) {
-      console.log(err)
       if(err.response.data === 'Please verify your email'){
         setError('Por favor verifique o seu email!');
       }
