@@ -25,7 +25,7 @@ const Cart = () => {
             await axios.delete(`https://e-commerce-api-akwz.onrender.com/cart`, { data: { productId } });
             setCartItems(prevCartItems => prevCartItems.filter(item => item._id !== productId));
         } catch (error) {
-            console.error('Error removing item from cart:', error);
+            console.error('Error removing item from cart');
         }
     };
 
@@ -35,7 +35,7 @@ const Cart = () => {
                                                        .filter(item => item.quantity > 0));
             await axios.patch(`https://e-commerce-api-akwz.onrender.com/cart/decrease`, { productId });
         } catch (error) {
-            console.error('Error updating item quantity:', error);
+            console.error('Error updating item quantity');
         }
     };
 
@@ -43,9 +43,8 @@ const Cart = () => {
         try {
             setCartItems(prevCartItems => prevCartItems.map(item => item._id === productId ? { ...item, quantity: item.quantity + 1 } : item));
             await axios.patch(`https://e-commerce-api-akwz.onrender.com/cart/increase`, { productId });
-            console.log(cartItems)
         } catch (error) {
-            console.error('Error updating item quantity:', error);
+            console.error('Error updating item quantity');
         }
     };
 

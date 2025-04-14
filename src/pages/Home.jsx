@@ -85,7 +85,7 @@ const Home = () => {
             setIsLoggedIn(false);
             setIsMenuOpen(false);
         } catch (error) {
-            console.error('Error logging out:', error);
+            console.error('Error logging out:');
         }
     };
 
