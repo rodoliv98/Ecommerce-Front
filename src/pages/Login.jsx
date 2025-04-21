@@ -7,23 +7,31 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [error2, setError2] = useState([]);
   const redirectUser = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
     try {
       const response = await axios.post('https://e-commerce-api-akwz.onrender.com/login', { email, password }, { withCredentials: true });
-      if(response.data.token){
-        localStorage.setItem('token', response.data.token)
+      if (response.data.token) {
+        const expirationTime = new Date().getTime() + 60 * 60 * 1000; 
+        localStorage.setItem('loginToken', JSON.stringify({ token: response.data.token, expiresAt: expirationTime }));
       }
 
-      if(response.data === 'Login successful' || response.data.msg === 'Login successful'){
+      if (response.data === 'Login successful' || response.data.msg === 'Login successful') {
         redirectUser('/');
       }
     } catch (err) {
-      if(err.response.data === 'Please verify your email'){
+      if (err.response.data === 'Please verify your email') {
         setError('Por favor verifique o seu email!');
       }
+      if (err.response.data.msg) {
+        setError(err.response.data.msg);
+      }
+      setError2(err.response.data);
     }
   };
 
@@ -77,7 +85,7 @@ const Login = () => {
             Registrar agora
           </Link>
         </div>
-        {error && <p className="text-black mt-4 text-center">{error}</p>}
+        {error ? <p className="text-black mt-4 text-center">{error}</p> : <p className="text-black mt-4 text-center">{error2}</p>}
       </div>
     </div>
   );

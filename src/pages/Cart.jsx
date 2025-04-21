@@ -1,51 +1,47 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
-    const [error, setError] = useState('');
-    const redirectUser = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchCartItems = async () => {
-            try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
-                setCartItems(response.data);
-            } catch (error) {
-                if (error.response.data === 'Unauthorized') return redirectUser('/login');
+        const checkLoginToken = () => {
+            const token = localStorage.getItem('loginToken');
+            if (!token) {
+                navigate('/login');
             }
         };
 
-        fetchCartItems();
-    }, []);
+        const loadCartFromLocalStorage = () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            setCartItems(cart);
+        };
 
-    const handleRemoveFromCart = async (productId) => {
-        try {
-            await axios.delete(`https://e-commerce-api-akwz.onrender.com/cart`, { data: { productId } });
-            setCartItems(prevCartItems => prevCartItems.filter(item => item._id !== productId));
-        } catch (error) {
-            console.error('Error removing item from cart');
-        }
+        checkLoginToken();
+        loadCartFromLocalStorage();
+    }, [navigate]);
+
+    const handleRemoveFromCart = (productId) => {
+        const updatedCart = cartItems.filter(item => item.productId !== productId);
+        setCartItems(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
     };
 
-    const handleDecreaseQuantity = async (productId) => {
-        try {
-            setCartItems(prevCartItems => prevCartItems.map(item => item._id === productId ? { ...item, quantity: item.quantity - 1 } : item)
-                                                       .filter(item => item.quantity > 0));
-            await axios.patch(`https://e-commerce-api-akwz.onrender.com/cart/decrease`, { productId });
-        } catch (error) {
-            console.error('Error updating item quantity');
-        }
+    const handleDecreaseQuantity = (productId) => {
+        const updatedCart = cartItems.map(item =>
+            item.productId === productId ? { ...item, quantity: item.quantity - 1 } : item
+        ).filter(item => item.quantity > 0);
+        setCartItems(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
     };
 
-    const handleIncreaseQuantity = async (productId) => {
-        try {
-            setCartItems(prevCartItems => prevCartItems.map(item => item._id === productId ? { ...item, quantity: item.quantity + 1 } : item));
-            await axios.patch(`https://e-commerce-api-akwz.onrender.com/cart/increase`, { productId });
-        } catch (error) {
-            console.error('Error updating item quantity');
-        }
+    const handleIncreaseQuantity = (productId) => {
+        const updatedCart = cartItems.map(item =>
+            item.productId === productId ? { ...item, quantity: item.quantity + 1 } : item
+        );
+        setCartItems(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
     };
 
     const calculateTotal = () => {
@@ -65,31 +61,31 @@ const Cart = () => {
                     <p className="text-black text-center">Seu carrinho está vazio</p>
                 ) : (
                     cartItems.map(item => (
-                        <div key={item._id} className="border-b border-gray-300 pb-4 mb-4">
+                        <div key={item.productId} className="border-b border-gray-300 pb-4 mb-4">
                             <h2 className="text-xl font-bold text-black mb-2">{item.item}</h2>
-                            <p className="text-lg font-semibold text-black">Preço: R${item.price}</p>
+                            <p className="text-lg font-semibold text-black">Preço unitário: R${item.price.toFixed(2)}</p>
                             <p className="text-lg font-semibold text-black">Subtotal: R${(item.price * item.quantity).toFixed(2)}</p>
                             <div className="flex items-center justify-between mt-4">
                                 <div className="flex items-center space-x-4">
                                     <button
-                                        onClick={() => handleDecreaseQuantity(item._id)}
+                                        onClick={() => handleDecreaseQuantity(item.productId)}
                                         className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 active:bg-gray-900 transition duration-200"
                                     >
                                         -
                                     </button>
                                     <span className="text-black text-center w-8">{item.quantity}</span>
                                     <button
-                                        onClick={() => handleIncreaseQuantity(item._id)}
+                                        onClick={() => handleIncreaseQuantity(item.productId)}
                                         className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800 active:bg-gray-900 transition duration-200"
                                     >
                                         +
                                     </button>
                                 </div>
                                 <button
-                                    onClick={() => handleRemoveFromCart(item._id)}
+                                    onClick={() => handleRemoveFromCart(item.productId)}
                                     className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 active:bg-red-700 transition duration-200"
                                 >
-                                    <img src="trash.svg" alt="trash icon" className="h-5 w-5 mx-auto" />
+                                    Remover
                                 </button>
                             </div>
                         </div>

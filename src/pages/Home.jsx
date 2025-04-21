@@ -26,26 +26,20 @@ const Home = () => {
             }
         };
 
-        const fetchCartCount = async () => {
-            try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
-                setCartCount(response.data.length);
-            } catch (error) {
-            }
+        const loadCartFromLocalStorage = () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            setCartCount(cart.length); 
         };
 
         fetchProducts();
-        fetchCartCount();
+        loadCartFromLocalStorage();
     }, []);
 
     useEffect(() => {
         const checkLoginStatus = async () => {
-            try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/status', { withCredentials: true });
-                setIsLoggedIn(response.data);
-            } catch {
-                setIsLoggedIn(false);
-            }
+            const token = localStorage.getItem('loginToken');
+            if(!token) setIsLoggedIn(false);
+            if(token) setIsLoggedIn(true);
         };
 
         checkLoginStatus();
@@ -68,20 +62,28 @@ const Home = () => {
         setSearchTerm(e.target.value);
     };
 
-    const handleAddToCart = async (productId) => {
-        try {
-            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/cart', { productId });
-            if(response.data.msg === 'Product added to the cart'){
-                setCartCount(cartCount + 1);
-            }
-        } catch (error) {
-            if (error.response.data === 'Unauthorized') return redirectUser('/login');
+    const handleAddToCart = (productId, price, item) => {
+        const token = localStorage.getItem('loginToken');
+        if(!token){
+            return redirectUser('/login')
         }
+        
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingItem = cart.find(item => item.productId === productId);
+
+        if (!existingItem) {
+            cart.push({ productId, item, price, quantity: 1 });
+            setCartCount(cartCount + 1);
+        } else {
+            existingItem.quantity += 1;
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
     };
 
     const handleLogout = async () => {
         try {
-            await axios.post('https://e-commerce-api-akwz.onrender.com/logout', {}, { withCredentials: true });
+            localStorage.removeItem('loginToken');
             setIsLoggedIn(false);
             setIsMenuOpen(false);
         } catch (error) {
@@ -247,7 +249,7 @@ const Home = () => {
                                 <div className="flex items-center justify-between mt-2">
                                     <p className="text-lg font-semibold text-black">R${product.price.toFixed(2)}</p> 
                                     <button
-                                        onClick={() => handleAddToCart(product._id)}
+                                        onClick={() => handleAddToCart(product._id, product.price, product.item)}
                                         className="text-black"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 relative" fill="none" viewBox="0 0 24 24" stroke="black">

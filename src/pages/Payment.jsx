@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Payment = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -13,32 +13,28 @@ const Payment = () => {
         state: '',
         country: '',
         cep: '',
-        cardNumber: '',
-        currency: 'USD',
+        card: '',
+        currency: 'BRL',
     });
     const [total, setTotal] = useState(0);
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchCartItems = async () => {
-            try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
-                setCartItems(response.data);
-                const totalCost = response.data.reduce((sum, item) => sum + item.price * item.quantity, 0);
-                setTotal(totalCost);
-            } catch (error) {
-                if (error.response?.data === 'Unauthorized') navigate('/login');
-            }
+        const loadCartFromLocalStorage = () => {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            setCartItems(cart);
+            const totalCost = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            setTotal(totalCost);
         };
 
-        fetchCartItems();
-    }, [navigate]);
+        loadCartFromLocalStorage();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        if (name === 'cardNumber') {
+        if (name === 'card') {
             const formattedValue = value
                 .replace(/\D/g, '')
                 .slice(0, 16)
@@ -89,18 +85,22 @@ const Payment = () => {
         e.preventDefault();
         setError('');
         try {
+            const token = localStorage.getItem('loginToken'); 
+            if(!token){
+                navigate('/login')
+            }
             const payload = {
                 ...formData,
                 total,
-                cart: cartItems.map(item => ({
-                    _id: item._id,
-                    item: item.item,
-                    price: item.price,
-                    quantity: item.quantity,
-                })),
+                cart: cartItems,
             };
-            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/cart/payment', payload);
+            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/cart/payment', payload, {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Include the token in the headers
+                },
+            });
             if (response.data.purchaseID) {
+                localStorage.removeItem('cart'); // Clear cart after successful payment
                 navigate('/confirmation', { state: { purchaseId: response.data.purchaseID } });
             }
         } catch (error) {
@@ -239,12 +239,12 @@ const Payment = () => {
                     </div>
                     <h2 className="text-2xl font-bold text-black mb-4">Forma de pagamento</h2>
                     <div>
-                        <label htmlFor="cardNumber" className="block text-black font-semibold mb-2">Número do cartão de credito:</label>
+                        <label htmlFor="card" className="block text-black font-semibold mb-2">Número do cartão de credito:</label>
                         <input
                             type="text"
-                            id="cardNumber"
-                            name="cardNumber"
-                            value={formData.cardNumber}
+                            id="card"
+                            name="card"
+                            value={formData.card}
                             onChange={handleChange}
                             placeholder='Número do cartão de crédito'
                             required
