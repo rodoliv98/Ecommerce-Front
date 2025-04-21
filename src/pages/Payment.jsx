@@ -96,11 +96,11 @@ const Payment = () => {
             };
             const response = await axios.post('https://e-commerce-api-akwz.onrender.com/cart/payment', payload, {
                 headers: {
-                    Authorization: `Bearer ${token}`, // Include the token in the headers
+                    Authorization: `Bearer ${token}`,
                 },
             });
             if (response.data.purchaseID) {
-                localStorage.removeItem('cart'); // Clear cart after successful payment
+                localStorage.removeItem('cart');
                 navigate('/confirmation', { state: { purchaseId: response.data.purchaseID } });
             }
         } catch (error) {

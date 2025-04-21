@@ -31,24 +31,19 @@ const ProductDetails = () => {
 
     useEffect(() => {
         const fetchCartCount = async () => {
-            try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/cart');
-                setCartCount(response.data.length);
-            } catch (error) {
-                console.error('Error fetching cart count:', error);
-            }
+                const cart = localStorage.getItem('cart');
+                const parsedCart = JSON.parse(cart);
+                setCartCount(parsedCart.length);
         };
         fetchCartCount();
     }, []);
 
     useEffect(() => {
         const checkLoginStatus = async () => {
-            try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/status', { withCredentials: true });
-                setIsLoggedIn(response.data);
-            } catch {
-                setIsLoggedIn(false);
-            }
+            const token = localStorage.getItem('loginToken');
+            if(!token) redirectUser('/login');
+
+            setIsLoggedIn(true)
         };
         checkLoginStatus();
     }, []);
@@ -64,26 +59,28 @@ const ProductDetails = () => {
     }, []);
 
     const handleLogout = async () => {
-        try {
-            await axios.post('https://e-commerce-api-akwz.onrender.com/logout', {}, { withCredentials: true });
+            localStorage.removeItem('loginToken');
             setIsLoggedIn(false);
             setIsMenuOpen(false);
-        } catch (error) {
-            console.error('Error logging out:', error);
-        }
     };
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-    const handleAddToCart = async (productId) => {
-        try {
-            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/cart', { productId });
-            if (response.data.msg === 'Product added to the cart') {
-                setCartCount(cartCount + 1);
-            }
-        } catch (error) {
-            if (error.response?.data === 'Unauthorized') return redirectUser('/login');
+    const handleAddToCart = async (productId, price, item) => {
+        const token = localStorage.getItem('loginToken');
+        if(!token) redirectUser('/login');
+
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const existingItem = cart.find(item => item.productId === productId);
+
+        if(!existingItem){
+            cart.push({ productId, item, price, quantity: 1 });
+            setCartCount(cartCount + 1);
+        } else {
+            existingItem.quantity += 1;
         }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
     };
 
     const handleQuantityChange = (change) => {
@@ -223,7 +220,7 @@ const ProductDetails = () => {
                                 </div>
 
                                 <button
-                                    onClick={() => handleAddToCart(product._id)}
+                                    onClick={() => handleAddToCart(product._id, product.price, product.item)}
                                     className="w-full bg-blue-800 text-white px-6 py-4 rounded-lg hover:bg-blue-700 active:bg-blue-900 transition duration-200 flex items-center justify-center space-x-2 font-semibold mt-4"
                                 >
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
