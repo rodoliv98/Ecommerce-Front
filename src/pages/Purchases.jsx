@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../intercepter/intercepter.js';
 import { Link } from 'react-router-dom';
 
 const Purchases = () => {
@@ -9,7 +9,7 @@ const Purchases = () => {
     useEffect(() => {
         const fetchPurchases = async () => {
             try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/historic');
+                const response = await api.get('/user/historic');
                 if (Array.isArray(response.data.historic)) {
                     setPurchases(response.data.historic); 
                 }

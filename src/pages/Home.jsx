@@ -17,7 +17,7 @@ const Home = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/products');
+                const response = await axios.get('http://localhost:3000/products');
                 setProducts(response.data.products || response.data);
             } catch (error) {
                 setError('Failed to fetch products');
@@ -82,13 +82,9 @@ const Home = () => {
     };
 
     const handleLogout = async () => {
-        try {
             localStorage.removeItem('loginToken');
             setIsLoggedIn(false);
             setIsMenuOpen(false);
-        } catch (error) {
-            console.error('Error logging out:');
-        }
     };
 
     const toggleMenu = () => {

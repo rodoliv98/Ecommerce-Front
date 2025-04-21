@@ -65,7 +65,6 @@ const Register = () => {
                 setMessage('Conta criada com sucesso! Verifique seu email para confirmar.');
             }
         } catch (error) {
-            console.log(error)
             setMessage('Ocorreu um erro, tente novamente.');
         } finally {
             setIsSubmitting(false);

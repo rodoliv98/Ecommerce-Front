@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../../intercepter/intercepter.js';
 import { useNavigate, Link } from 'react-router-dom';
 
-axios.defaults.withCredentials = true;
+//axios.defaults.withCredentials = true;
 
 const Profile = () => {
     const [userData, setUserData] = useState(null);
@@ -13,10 +13,11 @@ const Profile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user');
+                const response = await api.get('/user');
                 setUserData(response.data);
             } catch (err) {
-                if(err.response.data === 'Unauthorized'){
+                if(err.response.status === 401){
+                    localStorage.removeItem('loginToken');
                     userRedirect('/login');
                 }
                 setError(err.message);
@@ -27,6 +28,11 @@ const Profile = () => {
 
         fetchUserData();
     }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('loginToken');
+        userRedirect('/');
+    }
 
     if (loading) {
         return (
@@ -77,7 +83,7 @@ const Profile = () => {
                                 <span className="text-lg font-bold">Endereços</span>
                             </Link>
                             <button
-                                onClick={() => userRedirect('/logout')}
+                                onClick={() => handleLogout()}
                                 className="flex items-center justify-center bg-red-500 text-white p-4 rounded-lg shadow-lg hover:bg-red-600 active:bg-red-700 transition duration-200"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">

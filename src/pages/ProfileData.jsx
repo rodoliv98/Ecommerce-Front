@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../intercepter/intercepter.js';
 import { useNavigate, Link } from 'react-router-dom';
 
 const ProfileData = () => {
@@ -16,7 +16,7 @@ const ProfileData = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/profile');
+                const response = await api.get('/user/profile');
                 setProfile({
                     fullName: response.data.findProfile.fullName,
                     birthDate: response.data.findProfile.birthDate,
@@ -73,12 +73,12 @@ const ProfileData = () => {
         
         try{
             if(empty.fullName === '' && empty.birthDate === '' && empty.cpf === ''){
-                const response = await axios.post('https://e-commerce-api-akwz.onrender.com/user/profile', profile);
+                const response = await api.post('/user/profile', profile);
                 setMessage(response.data.msg);
                 setEmpty('');
                 return;
             }
-            const response = await axios.patch('https://e-commerce-api-akwz.onrender.com/user/profile', profile);
+            const response = await api.patch('/user/profile', profile);
             setMessage(response.data.msg);
             setErrorMessage('');
         } catch(err){

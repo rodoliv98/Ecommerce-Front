@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../intercepter/intercepter.js';
 import { Link } from 'react-router-dom';
 
 const Addresses = () => {
@@ -17,7 +17,7 @@ const Addresses = () => {
     useEffect(() => {
         const fetchAddresses = async () => {
             try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/user/address');
+                const response = await api.get('/user/address');
                 setAddresses(response.data);
             } catch (error) {
                 setError('There was an error. Please try again.');
@@ -49,7 +49,7 @@ const Addresses = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/user/address', newAddress);
+            const response = await api.post('/user/address', newAddress);
             setAddresses([...addresses, response.data]);
             setNewAddress({
                 country: '',
@@ -60,7 +60,6 @@ const Addresses = () => {
             });
             setUpdate(Math.random());
         } catch (error) {
-            console.log(error)
             setError('There was an error adding the address. Please try again.');
         }
     };
@@ -68,9 +67,8 @@ const Addresses = () => {
     const handleUpdate = async (index) => {
         try {
             const address = addresses[index];
-            await axios.patch(`https://e-commerce-api-akwz.onrender.com/user/address/${address._id}`, address);
+            await api.patch(`/user/address/${address._id}`, address);
         } catch (error) {
-            console.log(error)
             setError('There was an error updating the address. Please try again.');
         }
     };
@@ -78,7 +76,7 @@ const Addresses = () => {
     const handleDelete = async (index) => {
         try {
             const address = addresses[index];
-            await axios.delete(`https://e-commerce-api-akwz.onrender.com/user/address/${address._id}`);
+            await api.delete(`/user/address/${address._id}`);
             setAddresses(addresses.filter((_, i) => i !== index));
         } catch (error) {
             setError('There was an error deleting the address. Please try again.');

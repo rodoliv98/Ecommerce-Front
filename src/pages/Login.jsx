@@ -15,7 +15,7 @@ const Login = () => {
     setError('');
 
     try {
-      const response = await axios.post('https://e-commerce-api-akwz.onrender.com/login', { email, password }, { withCredentials: true });
+      const response = await axios.post('http://localhost:3000/login', { email, password }, { withCredentials: true });
       if (response.data.token) {
         const expirationTime = new Date().getTime() + 60 * 60 * 1000; 
         localStorage.setItem('loginToken', JSON.stringify({ token: response.data.token, expiresAt: expirationTime }));

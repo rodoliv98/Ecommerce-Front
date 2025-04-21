@@ -12,7 +12,7 @@ const AdminPanel = () => {
 
             } catch (error) {
                 if (error.response?.status === 401) {
-                    return redirectUser('/');
+                    redirectUser('/');
                 }
             }
         };
