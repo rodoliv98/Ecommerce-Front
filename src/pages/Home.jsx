@@ -20,7 +20,6 @@ const Home = () => {
                 const response = await axios.get('https://e-commerce-api-akwz.onrender.com/products');
                 setProducts(response.data.products || response.data);
             } catch (error) {
-                console.log(error)
                 setError('Failed to fetch products');
             } finally {
                 setLoading(false);
