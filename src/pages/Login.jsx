@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
-
+import api from '/intercepter/intercepter.js'
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +14,7 @@ const Login = () => {
     setError('');
 
     try {
-      const response = await axios.post('https://e-commerce-api-akwz.onrender.com/login', { email, password }, { withCredentials: true });
+      const response = await api.post('/login', { email, password });
       if (response.data.token) {
         const expirationTime = new Date().getTime() + 60 * 60 * 1000; 
         localStorage.setItem('loginToken', JSON.stringify({ token: response.data.token, expiresAt: expirationTime }));

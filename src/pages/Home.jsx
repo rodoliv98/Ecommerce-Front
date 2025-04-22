@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '/intercepter/intercepter.js'
 
 const Home = () => {
     const [products, setProducts] = useState([]);
@@ -17,7 +17,7 @@ const Home = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/products');
+                const response = await api.get('/products');
                 setProducts(response.data.products || response.data);
             } catch (error) {
                 setError('Failed to fetch products');
@@ -41,14 +41,11 @@ const Home = () => {
             if(!token) return setIsLoggedIn(false);
             
             try{
-                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/status', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const response = await api.get('/status')
                 if(response.status === 200){
                     setIsLoggedIn(true);
                 }
+                console.log(response)
             } catch(err){
                 console.log(err)
                 if(err.response.data.msg === 'Token expired, please login again'){
