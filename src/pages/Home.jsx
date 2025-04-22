@@ -50,9 +50,10 @@ const Home = () => {
                     setIsLoggedIn(true);
                 }
             } catch(err){
-                if(err.reponse.data === 'Token expired, please login again'){
+                if(err.response.data.msg === 'Token expired, please login again'){
                     localStorage.removeItem('loginToken');
                 }
+                setIsLoggedIn(false);
             }
 
         };
