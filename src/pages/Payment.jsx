@@ -31,6 +31,17 @@ const Payment = () => {
         loadCartFromLocalStorage();
     }, []);
 
+    useEffect(() => {
+        const checkLogin = () => {
+            const token = localStorage.getItem('loginToken');
+            if(!token){
+                navigate('/login');
+            }
+        }
+
+        checkLogin();
+    })
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 

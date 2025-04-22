@@ -38,8 +38,23 @@ const Home = () => {
     useEffect(() => {
         const checkLoginStatus = async () => {
             const token = localStorage.getItem('loginToken');
-            if(!token) setIsLoggedIn(false);
-            if(token) setIsLoggedIn(true);
+            if(!token) return setIsLoggedIn(false);
+            
+            try{
+                const response = await axios.get('https://e-commerce-api-akwz.onrender.com/status', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                if(response.status === 200){
+                    setIsLoggedIn(true);
+                }
+            } catch(err){
+                if(err.reponse.data === 'Token expired, please login again'){
+                    localStorage.removeItem('loginToken');
+                }
+            }
+
         };
 
         checkLoginStatus();
