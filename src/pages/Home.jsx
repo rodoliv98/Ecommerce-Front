@@ -45,9 +45,7 @@ const Home = () => {
                 if(response.status === 200){
                     setIsLoggedIn(true);
                 }
-                console.log(response)
             } catch(err){
-                console.log(err)
                 if(err.response.data.msg === 'Token expired, please login again'){
                     localStorage.removeItem('loginToken');
                 }
