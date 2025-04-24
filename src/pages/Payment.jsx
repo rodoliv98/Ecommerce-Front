@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '/intercepter/intercepter.js'
 
 const Payment = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -105,16 +105,13 @@ const Payment = () => {
                 total,
                 cart: cartItems,
             };
-            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/cart/payment', payload, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
+            const response = await api.post('/cart/payment', payload);
             if (response.data.purchaseID) {
                 localStorage.removeItem('cart');
                 navigate('/confirmation', { state: { purchaseId: response.data.purchaseID } });
             }
         } catch (error) {
+            console.log(error)
             setError('An error occurred while processing your payment. Please try again.');
         }
     };

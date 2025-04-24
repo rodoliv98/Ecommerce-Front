@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from '../../intercepter/intercepter.js';
+import api from '/intercepter/intercepter.js';
 import { Link } from 'react-router-dom';
 
 const Purchases = () => {

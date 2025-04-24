@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from '/intercepter/intercepter.js';
 import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const EmailConfirmed = () => {
     useEffect(() => {
         async function handleSendEmail() {
             try {
-                const response = await axios.post(`https://e-commerce-api-akwz.onrender.com/register/verify-email?token=${token}`);
+                const response = await api.post(`/register/verify-email?token=${token}`);
                 setMessage(response.data);
             } catch (err) {
                 setMessage('Error confirming email');

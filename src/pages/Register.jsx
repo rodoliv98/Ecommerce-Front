@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '/intercepter/intercepter.js';
 import { Link } from 'react-router-dom';
 
 const Register = () => {
@@ -60,7 +60,7 @@ const Register = () => {
         setIsSubmitting(true);
         try {
             const { confirmPassword, ...dataToSend } = formData;
-            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/register', dataToSend);
+            const response = await api.post('/register', dataToSend);
             if (response.data === 'Account created') {
                 setMessage('Conta criada com sucesso! Verifique seu email para confirmar.');
             }

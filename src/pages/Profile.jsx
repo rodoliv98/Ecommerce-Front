@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import api from '../../intercepter/intercepter.js';
+import api from '/intercepter/intercepter.js';
 import { useNavigate, Link } from 'react-router-dom';
 
 //axios.defaults.withCredentials = true;

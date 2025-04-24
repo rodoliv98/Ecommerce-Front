@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '/intercepter/intercepter.js'
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ const ChangePassword = () => {
         setMessage('');
         setIsSubmitting(true);
         try {
-            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/register/new-password', { password: formData.password });
+            const response = await api.post('/register/new-password', { password: formData.password });
             setMessage(response.data.message || 'Password changed successfully!');
         } catch (err) {
             setError(err.response?.data || 'Failed to change password.');

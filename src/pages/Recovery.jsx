@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '/intercepter/intercepter.js';
 
 const Recovery = () => {
     const [email, setEmail] = useState('');
@@ -8,7 +8,7 @@ const Recovery = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://e-commerce-api-akwz.onrender.com/register/recovery-password', { email });
+            const response = await api.post('/register/recovery-password', { email });
             setMessage(response.data);
         } catch (error) {
             setMessage(error.response.data);

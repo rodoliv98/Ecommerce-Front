@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '/intercepter/intercepter.js';
 
 const ProductDetails = () => {
     const { productId } = useParams();
@@ -17,7 +17,7 @@ const ProductDetails = () => {
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
-                const response = await axios.get(`https://e-commerce-api-akwz.onrender.com/products/${productId}`);
+                const response = await api.get(`/products/${productId}`);
                 setProduct(response.data.product);
             } catch (err) {
                 setError('Failed to fetch product details');
