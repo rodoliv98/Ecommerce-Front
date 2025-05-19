@@ -17,8 +17,8 @@ const ProductDetails = () => {
     useEffect(() => {
         const fetchProductDetails = async () => {
             try {
-                const response = await api.get(`/products/${productId}`);
-                setProduct(response.data.product);
+                const response = await api.get(`/api/v1/products/${productId}`);
+                setProduct(response.data);
             } catch (err) {
                 setError('Failed to fetch product details');
             } finally {
@@ -30,22 +30,33 @@ const ProductDetails = () => {
     }, [productId]);
 
     useEffect(() => {
+        const checkLoginStatus = async () => {
+            const accessCookie = document.cookie.split(';').find(cookie => cookie.startsWith('accessToken'));
+            const refreshCookie = document.cookie.split(';').find(cookie => cookie.startsWith('refreshToken'));
+            if (accessCookie) {
+                setIsLoggedIn(true);
+            } else if (refreshCookie) {
+                try {
+                    await api.post('/api/v1/refresh');
+                    setIsLoggedIn(true);
+                } catch {
+                    setIsLoggedIn(false);
+                }
+            } else {
+                setIsLoggedIn(false);
+            }
+        };
+    
+        checkLoginStatus();
+    }, []);
+
+    useEffect(() => {
         const fetchCartCount = async () => {
                 const cart = localStorage.getItem('cart');
                 const parsedCart = JSON.parse(cart);
                 setCartCount(parsedCart.length);
         };
         fetchCartCount();
-    }, []);
-
-    useEffect(() => {
-        const checkLoginStatus = async () => {
-            const token = localStorage.getItem('loginToken');
-            if(!token) redirectUser('/login');
-
-            setIsLoggedIn(true)
-        };
-        checkLoginStatus();
     }, []);
 
     useEffect(() => {
@@ -59,16 +70,17 @@ const ProductDetails = () => {
     }, []);
 
     const handleLogout = async () => {
-            localStorage.removeItem('loginToken');
             setIsLoggedIn(false);
             setIsMenuOpen(false);
+            try {
+                await api.post('/api/v1/logout');
+            } catch (e) {}
     };
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     const handleAddToCart = async (productId, price, item) => {
-        const token = localStorage.getItem('loginToken');
-        if(!token) redirectUser('/login');
+        if(!isLoggedIn) return redirectUser('/api/v1/login');
 
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const existingItem = cart.find(item => item.productId === productId);

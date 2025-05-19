@@ -13,7 +13,7 @@ const Payment = () => {
         state: '',
         country: '',
         cep: '',
-        card: '',
+        cardNumber: '',
         currency: 'BRL',
     });
     const [total, setTotal] = useState(0);
@@ -32,10 +32,10 @@ const Payment = () => {
     }, []);
 
     useEffect(() => {
-        const checkLogin = () => {
-            const token = localStorage.getItem('loginToken');
-            if(!token){
-                navigate('/login');
+        const checkLogin = async () => {
+            const cookie = document.cookie.split(';').find(row => row.startsWith('accessToken='));
+            if(!cookie){
+                navigate('/api/v1/login')
             }
         }
 
@@ -45,7 +45,7 @@ const Payment = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        if (name === 'card') {
+        if (name === 'cardNumber') {
             const formattedValue = value
                 .replace(/\D/g, '')
                 .slice(0, 16)
@@ -96,19 +96,15 @@ const Payment = () => {
         e.preventDefault();
         setError('');
         try {
-            const token = localStorage.getItem('loginToken'); 
-            if(!token){
-                navigate('/login')
-            }
             const payload = {
                 ...formData,
                 total,
                 cart: cartItems,
             };
-            const response = await api.post('/cart/payment', payload);
-            if (response.data.purchaseID) {
+            const response = await api.post('/api/v1/purchase', payload);
+            if (response.data.purchaseId) {
                 localStorage.removeItem('cart');
-                navigate('/confirmation', { state: { purchaseId: response.data.purchaseID } });
+                navigate('/api/v1/confirmation', { state: { purchaseId: response.data.purchaseId } });
             }
         } catch (error) {
             console.log(error)
@@ -247,12 +243,12 @@ const Payment = () => {
                     </div>
                     <h2 className="text-2xl font-bold text-black mb-4">Forma de pagamento</h2>
                     <div>
-                        <label htmlFor="card" className="block text-black font-semibold mb-2">Número do cartão de credito:</label>
+                        <label htmlFor="cardNumber" className="block text-black font-semibold mb-2">Número do cartão de credito:</label>
                         <input
                             type="text"
-                            id="card"
-                            name="card"
-                            value={formData.card}
+                            id="cardNumber"
+                            name="cardNumber"
+                            value={formData.cardNumber}
                             onChange={handleChange}
                             placeholder='Número do cartão de crédito'
                             required

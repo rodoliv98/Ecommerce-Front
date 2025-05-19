@@ -14,23 +14,18 @@ const Login = () => {
     setError('');
 
     try {
-      const response = await api.post('/login', { email, password });
-      if (response.data.token) {
-        const expirationTime = new Date().getTime() + 60 * 60 * 1000; 
-        localStorage.setItem('loginToken', JSON.stringify({ token: response.data.token, expiresAt: expirationTime }));
-      }
-
-      if (response.data === 'Login successful' || response.data.msg === 'Login successful') {
+      const response = await api.post('/api/v1/login', { email, password });
+      if (response.data.message === 'Autenticado com sucesso') {
         redirectUser('/');
       }
+
     } catch (err) {
-      if (err.response.data === 'Please verify your email') {
-        setError('Por favor verifique o seu email!');
+      console.log(err);
+      if (err.response.data.error === 'Email não verificado') {
+        setError('Email não verificado, por favor verifique seu email');
+      } else if (err.response.data.error) {
+        setError('Email ou senha inválidos');
       }
-      if (err.response.data.msg) {
-        setError(err.response.data.msg);
-      }
-      setError2(err.response.data);
     }
   };
 

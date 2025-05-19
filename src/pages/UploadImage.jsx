@@ -11,11 +11,10 @@ const UploadImage = () => {
     useEffect(() => {
         const checkAdminAccess = async () => {
             try {
-                await api.get('/admin');
-
+                await api.get('/api/v1/admin');
             } catch (error) {
                 if (error.response?.status === 401) {
-                    redirectUser('/');
+                    redirectUser('/api/v1/login');
                 }
             }
         };
@@ -40,7 +39,7 @@ const UploadImage = () => {
         setIsUploading(true);
         setMessage('');
         try {
-            const response = await api.post('/products/upload', formData, {
+            const response = await api.post('/api/v1/admin/upload-image', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

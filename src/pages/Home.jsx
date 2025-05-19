@@ -17,8 +17,8 @@ const Home = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await api.get('/products');
-                setProducts(response.data.products || response.data);
+                const response = await api.get('/api/v1/products');
+                setProducts(response.data);
             } catch (error) {
                 setError('Failed to fetch products');
             } finally {
@@ -37,21 +37,20 @@ const Home = () => {
 
     useEffect(() => {
         const checkLoginStatus = async () => {
-            const token = localStorage.getItem('loginToken');
-            if(!token) return setIsLoggedIn(false);
-            
-            try{
-                const response = await api.get('/status')
-                if(response.status === 200){
+            const accessCookie = document.cookie.split(';').find(cookie => cookie.startsWith('accessToken'));
+            const refreshCookie = document.cookie.split(';').find(cookie => cookie.startsWith('refreshToken'));
+            if (accessCookie) {
+                setIsLoggedIn(true);
+            } else if (refreshCookie) {
+                try {
+                    await api.post('/api/v1/refresh');
                     setIsLoggedIn(true);
+                } catch {
+                    setIsLoggedIn(false);
                 }
-            } catch(err){
-                if(err.response.data.msg === 'Token expired, please login again'){
-                    localStorage.removeItem('loginToken');
-                }
+            } else {
                 setIsLoggedIn(false);
             }
-
         };
 
         checkLoginStatus();
@@ -75,9 +74,8 @@ const Home = () => {
     };
 
     const handleAddToCart = (productId, price, item) => {
-        const token = localStorage.getItem('loginToken');
-        if(!token){
-            return redirectUser('/login')
+        if(!isLoggedIn){
+            return redirectUser('/api/v1/login')
         }
         
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -94,9 +92,12 @@ const Home = () => {
     };
 
     const handleLogout = async () => {
-            localStorage.removeItem('loginToken');
             setIsLoggedIn(false);
             setIsMenuOpen(false);
+            // Optionally, call a logout API endpoint to clear the cookie
+            try {
+                await api.post('/api/v1/logout');
+            } catch (e) {}
     };
 
     const toggleMenu = () => {
@@ -108,7 +109,7 @@ const Home = () => {
     };
 
     const filteredProducts = products.filter(product =>
-        product.item.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        product.item && product.item.toLowerCase().includes(searchTerm.toLowerCase()) &&
         (selectedCategory === '' || product.category === selectedCategory)
     );
 

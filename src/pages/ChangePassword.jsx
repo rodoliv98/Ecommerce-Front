@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import api from '/intercepter/intercepter.js'
+import { useLocation } from 'react-router-dom';
 
 const ChangePassword = () => {
     const [formData, setFormData] = useState({
@@ -9,6 +10,9 @@ const ChangePassword = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const location = useLocation();
+    const token = new URLSearchParams(location.search).get('token');
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -21,17 +25,17 @@ const ChangePassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (formData.password !== formData.confirmPassword) {
-            setError('New passwords do not match.');
+            setError('Senhas não coincidem');
             return;
         }
         setError('');
         setMessage('');
         setIsSubmitting(true);
         try {
-            const response = await api.post('/register/new-password', { password: formData.password });
-            setMessage(response.data.message || 'Password changed successfully!');
+            const response = await api.post(`/api/v1/update-password?token=${token}`, { password: formData.password });
+            setMessage(response.data.message || 'Senha alterada com sucesso!');
         } catch (err) {
-            setError(err.response?.data || 'Failed to change password.');
+            setError('Ocorreu um erro, tente novamente.');
         } finally {
             setIsSubmitting(false);
         }

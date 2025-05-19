@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import api from '/intercepter/intercepter.js';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Addresses = () => {
     const [addresses, setAddresses] = useState([]);
@@ -9,18 +9,23 @@ const Addresses = () => {
         state: '',
         city: '',
         street: '',
-        houseNumber: ''
+        houseNumber: '',
+        cep: ''
     });
     const [update, setUpdate] = useState(0);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchAddresses = async () => {
             try {
-                const response = await api.get('/user/address');
+                const response = await api.get('/api/v1/user/address');
                 setAddresses(response.data);
-            } catch (error) {
-                setError('There was an error. Please try again.');
+            } catch (err) {
+                if(err.response.status === 401){
+                    navigate('/api/v1/login');
+                }
+                setError('Ocorreu um erro ao buscar os endereços. Tente novamente.');
             }
         };
         fetchAddresses();
@@ -28,10 +33,20 @@ const Addresses = () => {
    
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setNewAddress(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        if (name === 'cep') {
+            const formattedCep = value
+                .replace(/\D/g, '')
+                .slice(0, 8)
+                .replace(/(\d{5})(\d)/, '$1-$2');
+            setNewAddress({
+                ...newAddress, [name]: formattedCep
+            })
+        } else {
+            setNewAddress(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
     };
 
     const handleAddressChange = (index, e) => {
@@ -49,37 +64,38 @@ const Addresses = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post('/user/address', newAddress);
+            const response = await api.post('/api/v1/user/address', newAddress);
             setAddresses([...addresses, response.data]);
             setNewAddress({
                 country: '',
                 state: '',
                 city: '',
                 street: '',
-                houseNumber: ''
+                houseNumber: '',
+                cep: ''
             });
             setUpdate(Math.random());
-        } catch (error) {
-            setError('There was an error adding the address. Please try again.');
+        } catch (err) {
+            setError('Ocorreu um erro ao adicionar o endereço. Tente novamente.');
         }
     };
 
     const handleUpdate = async (index) => {
         try {
             const address = addresses[index];
-            await api.patch(`/user/address/${address._id}`, address);
-        } catch (error) {
-            setError('There was an error updating the address. Please try again.');
+            await api.patch(`/api/v1/user/address/${address._id}`, address);
+        } catch (err) {
+            setError('Ocorreu um erro ao atualizar o endereço. Tente novamente.');
         }
     };
 
     const handleDelete = async (index) => {
         try {
             const address = addresses[index];
-            await api.delete(`/user/address/${address._id}`);
+            await api.delete(`/api/v1/user/address/${address._id}`);
             setAddresses(addresses.filter((_, i) => i !== index));
-        } catch (error) {
-            setError('There was an error deleting the address. Please try again.');
+        } catch (err) {
+            setError('Ocorreu um erro ao deletar o endereço. Tente novamente.');
         }
     };
 
@@ -141,6 +157,15 @@ const Addresses = () => {
                         required
                         className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                     />
+                    <input
+                        type="text"
+                        name="cep"
+                        value={newAddress.cep}
+                        onChange={handleChange}
+                        placeholder="CEP"
+                        required
+                        className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+                    />
                     <button type="submit" className="w-full bg-blue-800 text-white p-2 rounded hover:bg-blue-700 active:bg-blue-900 transition duration-200">
                         Adicionar
                     </button>
@@ -198,6 +223,16 @@ const Addresses = () => {
                                     type="text"
                                     name="houseNumber"
                                     value={address.houseNumber}
+                                    onChange={(e) => handleAddressChange(index, e)}
+                                    className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
+                                />
+                            </div>
+                            <div className="flex items-center">
+                                <label className="text-black font-semibold w-32">CEP:</label>
+                                <input
+                                    type="text"
+                                    name="cep"
+                                    value={address.cep}
                                     onChange={(e) => handleAddressChange(index, e)}
                                     className="bg-gray-200 w-full text-black px-3 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-gray-500 focus:border-gray-500"
                                 />

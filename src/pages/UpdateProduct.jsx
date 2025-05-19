@@ -11,11 +11,11 @@ const UpdateProduct = () => {
     useEffect(() => {
         const checkAdminAccess = async () => {
             try {
-                await api.get('/admin');
+                await api.get('/api/v1/admin');
                     
             } catch (error) {
                 if (error.response?.status === 401) {
-                    redirectUser('/');
+                    redirectUser('/api/v1/login');
                 }
             }
         };
@@ -34,11 +34,9 @@ const UpdateProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log(form)
-            const response = await api.patch(`/products/${productId}`, form);
+            const response = await api.patch(`/api/v1/products/${productId}`, form);
             setMessage(response.data.message || 'Product updated successfully!');
         } catch (error) {
-            console.error(error);
             setMessage('Failed to update product.');
         }
     };

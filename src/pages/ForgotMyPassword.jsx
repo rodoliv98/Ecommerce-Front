@@ -8,10 +8,10 @@ const Recovery = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post('/register/recovery-password', { email });
-            setMessage(response.data);
+            const response = await api.post('/api/v1/recover-password', { email });
+            setMessage(response.data.message);
         } catch (error) {
-            setMessage(error.response.data);
+            setMessage('Email inválido');
         }
     };
 

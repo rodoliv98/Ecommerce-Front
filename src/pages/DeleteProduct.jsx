@@ -10,7 +10,7 @@ const DeleteProduct = () => {
     useEffect(() => {
         const checkAdminAccess = async () => {
             try {
-                await api.get('/admin');
+                await api.get('/api/v1/admin');
 
             } catch (error) {
                 if (error.response?.status === 401) {
@@ -25,7 +25,7 @@ const DeleteProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.delete(`/products/${productId}`);
+            const response = await api.delete(`/api/v1/products/${productId}`);
             setMessage(response.data.message || 'Product deleted successfully!');
         } catch (error) {
             setMessage('Failed to delete product.');

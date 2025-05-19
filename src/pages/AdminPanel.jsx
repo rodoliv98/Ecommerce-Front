@@ -1,24 +1,37 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '/intercepter/intercepter.js'
 
 const AdminPanel = () => {
     const redirectUser = useNavigate();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const checkAdminAccess = async () => {
             try {
-                await api.get('/admin');
+                await api.get('/api/v1/admin');
 
             } catch (error) {
                 if (error.response?.status === 401) {
                     redirectUser('/');
                 }
             }
+            setLoading(false);
         };
 
         checkAdminAccess();
     }, []);
+
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-white">
+                <div className="flex flex-col items-center">
+                    <div className="w-16 h-16 border-4 border-black border-dashed rounded-full animate-spin"></div>
+                    <p className="text-black mt-4">Carregando...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-300 p-8">

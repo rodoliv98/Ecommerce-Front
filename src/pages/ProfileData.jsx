@@ -16,15 +16,17 @@ const ProfileData = () => {
     useEffect(() => {
         const getData = async () => {
             try {
-                const response = await api.get('/user/profile');
+                const response = await api.get('/api/v1/user/profile');
                 setProfile({
-                    fullName: response.data.findProfile.fullName,
-                    birthDate: response.data.findProfile.birthDate,
-                    cpf: response.data.findProfile.cpf
+                    fullName: response.data.fullName,
+                    birthDate: response.data.birthDate,
+                    cpf: response.data.cpf
                 });
-            } catch (error) {
-                console.log(error)
-                if(error.response.data === 'Not found'){
+            } catch (err) {
+                if(err.response.status === 401){
+                    navigate('/api/v1/login');
+                }
+                if(err.response.data.error === 'Perfil não encontrado'){
                     setEmpty({
                         fullName: '',
                         birthDate: '',
@@ -73,16 +75,16 @@ const ProfileData = () => {
         
         try{
             if(empty.fullName === '' && empty.birthDate === '' && empty.cpf === ''){
-                const response = await api.post('/user/profile', profile);
+                const response = await api.post('/api/v1/user/profile', profile);
                 setMessage(response.data.msg);
                 setEmpty('');
                 return;
             }
-            const response = await api.patch('/user/profile', profile);
+            const response = await api.patch('/api/v1/user/profile', profile);
             setMessage(response.data.msg);
             setErrorMessage('');
         } catch(err){
-            setErrorMessage(err.response.data);
+            setErrorMessage('Ocorreu um erro, tente novamente.');
         }
         
     };
@@ -147,7 +149,7 @@ const ProfileData = () => {
                         Salvar
                     </button>
                     {message && <p className="text-black mt-4 text-center">{message}</p>}
-                    {errorMessage && <p className="text-red-950 mt-4 text-center">{errorMessage.join(', ')}</p>}
+                    {/* {errorMessage && <p className="text-red-950 mt-4 text-center">{errorMessage.join(', ')}</p>} */}
                 </form>
             </div>
         </div>

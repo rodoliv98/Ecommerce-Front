@@ -11,7 +11,7 @@ const EmailConfirmed = () => {
     useEffect(() => {
         async function handleSendEmail() {
             try {
-                const response = await api.post(`/register/verify-email?token=${token}`);
+                const response = await api.post(`/api/v1/register/verify-email?token=${token}`);
                 setMessage(response.data);
             } catch (err) {
                 setMessage('Error confirming email');

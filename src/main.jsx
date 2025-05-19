@@ -6,12 +6,12 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import ProfileData from './pages/ProfileData'
-import Register from './pages/Register'
+import RegisterAccount from './pages/RegisterAccount'
 import Purchases from './pages/Purchases'
-import Recovery from './pages/Recovery'
+import ForgotMyPassword from './pages/ForgotMyPassword'
 import ChangePassword from './pages/ChangePassword'
 import EmailConfirmed from './pages/EmailConfirmed'
-import Addresses from './pages/Addresses'
+import UserAddresses from './pages/UserAddresses'
 import Cart from './pages/Cart'
 import Payment from './pages/Payment'
 import Confirmation from './pages/Confirmation'
@@ -25,11 +25,11 @@ import ProductDetails from './pages/ProductDetails'
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
   { path: '/login', element: <Login /> },
-  { path: '/register', element: <Register /> },
-  { path: '/forgot-password', element: <Recovery /> },
+  { path: '/register', element: <RegisterAccount /> },
+  { path: '/forgot-password', element: <ForgotMyPassword /> },
   { path: '/change-password', element: <ChangePassword /> },
   { path: '/verify-email', element: <EmailConfirmed /> },
-  { path: '/profile-address', element: <Addresses /> },
+  { path: '/profile-address', element: <UserAddresses /> },
   { path: '/cart', element: <Cart /> },
   { path: '/product/:productId', element: <ProductDetails /> },
   { path: '/payment', element: <Payment /> },

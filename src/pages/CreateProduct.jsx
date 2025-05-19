@@ -16,7 +16,7 @@ const CreateProduct = () => {
     useEffect(() => {
         const checkAdminAccess = async () => {
             try {
-                await api.get('/admin');
+                await api.get('/api/v1/admin');
                     
             } catch (error) {
                 if (error.response?.status === 401) {
@@ -36,7 +36,15 @@ const CreateProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post('/products', product);
+            const productData = {
+                item: product.item,
+                price: parseInt(product.price),
+                quantity: parseInt(product.quantity),
+                imagePath: product.imagePath,
+                category: product.category,
+            }
+            console.log(productData)
+            const response = await api.post('/api/v1/products', productData);
             setMessage(response.data.msg || 'Product created successfully!');
         } catch (error) {
             console.error(error)

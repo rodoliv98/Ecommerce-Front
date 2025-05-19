@@ -60,11 +60,13 @@ const Register = () => {
         setIsSubmitting(true);
         try {
             const { confirmPassword, ...dataToSend } = formData;
-            const response = await api.post('/register', dataToSend);
-            if (response.data === 'Account created') {
+            const response = await api.post('/api/v1/register', dataToSend);
+            console.log(response);
+            if (response.data.message === 'Conta criada com sucesso') {
                 setMessage('Conta criada com sucesso! Verifique seu email para confirmar.');
             }
         } catch (error) {
+            console.log(error);
             setMessage('Ocorreu um erro, tente novamente.');
         } finally {
             setIsSubmitting(false);

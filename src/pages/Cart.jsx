@@ -6,21 +6,21 @@ const Cart = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const checkLoginToken = () => {
-            const token = localStorage.getItem('loginToken');
-            if (!token) {
-                navigate('/login');
+        const checkLoginStatus = async () => {
+            const accessCookie = document.cookie.split(';').find(cookie => cookie.startsWith('accessToken'));
+            if (!accessCookie) {
+                navigate('/api/v1/login');
             }
         };
-
+        
         const loadCartFromLocalStorage = () => {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
             setCartItems(cart);
         };
 
-        checkLoginToken();
         loadCartFromLocalStorage();
-    }, [navigate]);
+        checkLoginStatus();
+    }, []);
 
     const handleRemoveFromCart = (productId) => {
         const updatedCart = cartItems.filter(item => item.productId !== productId);

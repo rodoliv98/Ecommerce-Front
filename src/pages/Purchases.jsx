@@ -9,9 +9,9 @@ const Purchases = () => {
     useEffect(() => {
         const fetchPurchases = async () => {
             try {
-                const response = await api.get('/user/historic');
-                if (Array.isArray(response.data.historic)) {
-                    setPurchases(response.data.historic); 
+                const response = await api.get('/api/v1/user/historic');
+                if (Array.isArray(response.data)) {
+                    setPurchases(response.data); 
                 }
             } catch (error) {
                 setError('Failed to fetch purchase history. Please try again later.'); 
