@@ -8,6 +8,7 @@ const Cart = () => {
     useEffect(() => {
         const checkLoginStatus = async () => {
             const accessCookie = document.cookie.split(';').find(cookie => cookie.startsWith('accessToken'));
+            console.log(accessCookie);
             if (!accessCookie) {
                 navigate('/login');
             }
