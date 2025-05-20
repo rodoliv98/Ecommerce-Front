@@ -40,7 +40,7 @@ const Confirmation = () => {
                                 </div>
                                 
                                 <p className="text-sm text-gray-500 mb-6">
-                                    Guarde este ID para consultas futuras. Um email de confirmação foi enviado para o seu endereço de email cadastrado.
+                                    Acesse o seu histórico de compras para ver o status do seu pedido. Aguarde a confirmação do pagamento.
                                 </p>
                             </div>
                         ) : (

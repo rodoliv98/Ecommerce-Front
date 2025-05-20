@@ -21,6 +21,8 @@ import CreateProduct from './pages/CreateProduct'
 import UpdateProduct from './pages/UpdateProduct'
 import DeleteProduct from './pages/DeleteProduct'
 import ProductDetails from './pages/ProductDetails'
+import NotFound from './pages/NotFound'
+import ErrorBoundary from './components/ErrorBoundary'
 
 const router = createBrowserRouter([
   { path: '/', element: <Home /> },
@@ -42,10 +44,14 @@ const router = createBrowserRouter([
   { path: '/admin/update-product', element: <UpdateProduct /> },
   { path: '/admin/delete-product', element: <DeleteProduct /> },
   { path: '/admin/upload-image', element: <UploadImage /> },
+  { path: '/not-found', element: <NotFound /> },
+  { path: '*', element: <NotFound /> } // Catch-all route for any undefined paths
 ])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
   </StrictMode>,
 )
