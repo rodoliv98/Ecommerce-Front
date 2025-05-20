@@ -23,7 +23,7 @@ const Addresses = () => {
                 setAddresses(response.data);
             } catch (err) {
                 if(err.response.status === 401){
-                    navigate('/api/v1/login');
+                    navigate('/login');
                 }
                 setError('Ocorreu um erro ao buscar os endereços. Tente novamente.');
             }

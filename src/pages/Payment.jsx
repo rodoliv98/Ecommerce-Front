@@ -35,7 +35,7 @@ const Payment = () => {
         const checkLogin = async () => {
             const cookie = document.cookie.split(';').find(row => row.startsWith('accessToken='));
             if(!cookie){
-                navigate('/api/v1/login')
+                navigate('/login')
             }
         }
 
@@ -104,10 +104,9 @@ const Payment = () => {
             const response = await api.post('/api/v1/purchase', payload);
             if (response.data.purchaseId) {
                 localStorage.removeItem('cart');
-                navigate('/api/v1/confirmation', { state: { purchaseId: response.data.purchaseId } });
+                navigate('/confirmation', { state: { purchaseId: response.data.purchaseId } });
             }
         } catch (error) {
-            console.log(error)
             setError('An error occurred while processing your payment. Please try again.');
         }
     };

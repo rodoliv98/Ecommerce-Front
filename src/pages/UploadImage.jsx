@@ -14,7 +14,7 @@ const UploadImage = () => {
                 await api.get('/api/v1/admin');
             } catch (error) {
                 if (error.response?.status === 401) {
-                    redirectUser('/api/v1/login');
+                    redirectUser('/login');
                 }
             }
         };
@@ -39,12 +39,12 @@ const UploadImage = () => {
         setIsUploading(true);
         setMessage('');
         try {
-            const response = await api.post('/api/v1/admin/upload-image', formData, {
+            await api.post('/api/v1/admin/upload-image', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            setMessage(response.data.message || 'Image uploaded successfully!');
+            setMessage('Image uploaded successfully!');
         } catch (error) {
             setMessage('Failed to upload image. Please try again.');
         } finally {

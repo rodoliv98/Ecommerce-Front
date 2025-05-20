@@ -75,7 +75,7 @@ const Home = () => {
 
     const handleAddToCart = (productId, price, item) => {
         if(!isLoggedIn){
-            return redirectUser('/api/v1/login')
+            return redirectUser('/login')
         }
         
         const cart = JSON.parse(localStorage.getItem('cart')) || [];

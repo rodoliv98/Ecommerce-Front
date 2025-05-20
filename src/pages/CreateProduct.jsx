@@ -43,11 +43,9 @@ const CreateProduct = () => {
                 imagePath: product.imagePath,
                 category: product.category,
             }
-            console.log(productData)
             const response = await api.post('/api/v1/products', productData);
-            setMessage(response.data.msg || 'Product created successfully!');
+            setMessage('Product created successfully!');
         } catch (error) {
-            console.error(error)
             setMessage('Failed to create product.');
         }
     };

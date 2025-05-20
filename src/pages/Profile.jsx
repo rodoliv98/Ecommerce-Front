@@ -15,7 +15,7 @@ const Profile = () => {
                 setUserData(response.data);
             } catch (err) {
                 if(err.response.status === 401){
-                    userRedirect('/api/v1/login');
+                    userRedirect('/login');
                 }
                 setError(err.message);
             } finally {
@@ -29,9 +29,9 @@ const Profile = () => {
     const handleLogout = async () => {
         try {
             await api.post('/api/v1/logout');
-            userRedirect('/api/v1/login');
+            userRedirect('/login');
         } catch (err) {
-            userRedirect('/api/v1/login');
+            userRedirect('/login');
         }
     }
 

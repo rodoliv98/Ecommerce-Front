@@ -15,7 +15,7 @@ const UpdateProduct = () => {
                     
             } catch (error) {
                 if (error.response?.status === 401) {
-                    redirectUser('/api/v1/login');
+                    redirectUser('/login');
                 }
             }
         };
@@ -34,8 +34,8 @@ const UpdateProduct = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.patch(`/api/v1/products/${productId}`, form);
-            setMessage(response.data.message || 'Product updated successfully!');
+            await api.patch(`/api/v1/products/${productId}`, form);
+            setMessage('Product updated successfully!');
         } catch (error) {
             setMessage('Failed to update product.');
         }

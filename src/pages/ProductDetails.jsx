@@ -80,7 +80,7 @@ const ProductDetails = () => {
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     const handleAddToCart = async (productId, price, item) => {
-        if(!isLoggedIn) return redirectUser('/api/v1/login');
+        if(!isLoggedIn) return redirectUser('/login');
 
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const existingItem = cart.find(item => item.productId === productId);

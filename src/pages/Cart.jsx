@@ -9,7 +9,7 @@ const Cart = () => {
         const checkLoginStatus = async () => {
             const accessCookie = document.cookie.split(';').find(cookie => cookie.startsWith('accessToken'));
             if (!accessCookie) {
-                navigate('/api/v1/login');
+                navigate('/login');
             }
         };
         
