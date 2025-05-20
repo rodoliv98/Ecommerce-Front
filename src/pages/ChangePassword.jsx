@@ -32,8 +32,8 @@ const ChangePassword = () => {
         setMessage('');
         setIsSubmitting(true);
         try {
-            const response = await api.post(`/api/v1/update-password?token=${token}`, { password: formData.password });
-            setMessage(response.data.message || 'Senha alterada com sucesso!');
+            await api.post(`/api/v1/update-password?token=${token}`, { password: formData.password });
+            setMessage('Senha alterada com sucesso!');
         } catch (err) {
             setError('Ocorreu um erro, tente novamente.');
         } finally {

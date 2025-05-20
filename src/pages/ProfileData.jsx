@@ -38,6 +38,18 @@ const ProfileData = () => {
         getData();
     }, []);
 
+    useEffect(() => {
+        const checkLogin = async () => {
+            try {
+                await api.get('/api/v1/auth');
+            } catch {
+                navigate('/login');
+            }
+        };
+
+        checkLogin();
+    }, []);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -84,6 +96,9 @@ const ProfileData = () => {
             setMessage(response.data.msg);
             setErrorMessage('');
         } catch(err){
+            if(err.response.status === 401){
+                navigate('/login');
+            }
             setErrorMessage('Ocorreu um erro, tente novamente.');
         }
         

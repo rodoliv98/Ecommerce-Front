@@ -30,6 +30,18 @@ const Addresses = () => {
         };
         fetchAddresses();
     }, [update]);
+
+    useEffect(() => {
+        const checkLogin = async () => {
+            try {
+                await api.get('/api/v1/auth');
+            } catch {
+                navigate('/login');
+            }
+        };
+
+        checkLogin();
+    }, []);
    
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -76,6 +88,9 @@ const Addresses = () => {
             });
             setUpdate(Math.random());
         } catch (err) {
+            if(err.response.status === 401){
+                navigate('/login');
+            }
             setError('Ocorreu um erro ao adicionar o endereço. Tente novamente.');
         }
     };
@@ -85,6 +100,9 @@ const Addresses = () => {
             const address = addresses[index];
             await api.patch(`/api/v1/user/address/${address._id}`, address);
         } catch (err) {
+            if(err.response.status === 401){
+                navigate('/login');
+            }
             setError('Ocorreu um erro ao atualizar o endereço. Tente novamente.');
         }
     };
@@ -95,6 +113,9 @@ const Addresses = () => {
             await api.delete(`/api/v1/user/address/${address._id}`);
             setAddresses(addresses.filter((_, i) => i !== index));
         } catch (err) {
+            if(err.response.status === 401){
+                navigate('/login');
+            }
             setError('Ocorreu um erro ao deletar o endereço. Tente novamente.');
         }
     };

@@ -37,19 +37,16 @@ const Home = () => {
 
     useEffect(() => {
         const checkLoginStatus = async () => {
-            const accessCookie = document.cookie.split(';').find(cookie => cookie.startsWith('accessToken'));
-            const refreshCookie = document.cookie.split(';').find(cookie => cookie.startsWith('refreshToken'));
-            if (accessCookie) {
+            try {
+                await api.get('/api/v1/auth');
                 setIsLoggedIn(true);
-            } else if (refreshCookie) {
-                try {
-                    await api.post('/api/v1/refresh');
+            } catch {
+                const res = await api.get('/api/v1/refresh');
+                if(res.status === 200){
                     setIsLoggedIn(true);
-                } catch {
+                } else { 
                     setIsLoggedIn(false);
                 }
-            } else {
-                setIsLoggedIn(false);
             }
         };
 

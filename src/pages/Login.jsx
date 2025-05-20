@@ -20,7 +20,6 @@ const Login = () => {
       }
 
     } catch (err) {
-      console.log(err);
       if (err.response.data.error === 'Email não verificado') {
         setError('Email não verificado, por favor verifique seu email');
       } else if (err.response.data.error) {

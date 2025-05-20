@@ -33,14 +33,15 @@ const Payment = () => {
 
     useEffect(() => {
         const checkLogin = async () => {
-            const cookie = document.cookie.split(';').find(row => row.startsWith('accessToken='));
-            if(!cookie){
-                navigate('/login')
+            try {
+                await api.get('/api/v1/auth');
+            } catch {
+                navigate('/login');
             }
         }
 
         checkLogin();
-    })
+    }, [])
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -107,6 +108,9 @@ const Payment = () => {
                 navigate('/confirmation', { state: { purchaseId: response.data.purchaseId } });
             }
         } catch (error) {
+            if(error.response.status === 401){
+                navigate('/login');
+            }
             setError('An error occurred while processing your payment. Please try again.');
         }
     };

@@ -17,7 +17,7 @@ const Profile = () => {
                 if(err.response.status === 401){
                     userRedirect('/login');
                 }
-                setError(err.message);
+                setError('Ocorreu um erro ao carregar seu perfil. Tente novamente.');
             } finally {
                 setLoading(false);
             }

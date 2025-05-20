@@ -12,7 +12,7 @@ const ProductDetails = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const dropdownRef = useRef(null);
-    const redirectUser = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProductDetails = async () => {
@@ -31,18 +31,10 @@ const ProductDetails = () => {
 
     useEffect(() => {
         const checkLoginStatus = async () => {
-            const accessCookie = document.cookie.split(';').find(cookie => cookie.startsWith('accessToken'));
-            const refreshCookie = document.cookie.split(';').find(cookie => cookie.startsWith('refreshToken'));
-            if (accessCookie) {
+            try {
+                await api.get('/api/v1/auth');
                 setIsLoggedIn(true);
-            } else if (refreshCookie) {
-                try {
-                    await api.post('/api/v1/refresh');
-                    setIsLoggedIn(true);
-                } catch {
-                    setIsLoggedIn(false);
-                }
-            } else {
+            } catch {
                 setIsLoggedIn(false);
             }
         };
@@ -80,7 +72,7 @@ const ProductDetails = () => {
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     const handleAddToCart = async (productId, price, item) => {
-        if(!isLoggedIn) return redirectUser('/login');
+        if(!isLoggedIn) return navigate('/login');
 
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
         const existingItem = cart.find(item => item.productId === productId);

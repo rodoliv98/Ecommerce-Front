@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import api from '/intercepter/intercepter.js';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Purchases = () => {
     const [purchases, setPurchases] = useState([]);
     const [error, setError] = useState(''); 
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchPurchases = async () => {
@@ -13,8 +14,11 @@ const Purchases = () => {
                 if (Array.isArray(response.data)) {
                     setPurchases(response.data); 
                 }
-            } catch (error) {
-                setError('Failed to fetch purchase history. Please try again later.'); 
+            } catch (err) {
+                if(err.response.status === 401){
+                    navigate('/login');
+                }
+                setError('Ocorreu um erro ao buscar o histórico de compras. Tente novamente.'); 
             }
         };
 

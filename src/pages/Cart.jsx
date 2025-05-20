@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import api from '/intercepter/intercepter.js'
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -7,9 +8,9 @@ const Cart = () => {
 
     useEffect(() => {
         const checkLoginStatus = async () => {
-            const accessCookie = document.cookie.split(';').find(cookie => cookie.startsWith('accessToken'));
-            console.log(accessCookie);
-            if (!accessCookie) {
+            try {
+                await api.get('/api/v1/auth');
+            } catch {
                 navigate('/login');
             }
         };

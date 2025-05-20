@@ -29,7 +29,7 @@ const UploadImage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!image) {
-            setMessage('Please select an image to upload.');
+            setMessage('Por favor, selecione uma imagem para enviar.');
             return;
         }
 
