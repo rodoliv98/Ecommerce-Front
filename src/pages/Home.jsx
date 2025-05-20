@@ -19,7 +19,7 @@ const Home = () => {
             try {
                 const response = await api.get('/api/v1/products');
                 setProducts(response.data);
-            } catch (error) {
+            } catch {
                 setError('Failed to fetch products');
             } finally {
                 setLoading(false);
@@ -40,12 +40,14 @@ const Home = () => {
             try {
                 await api.get('/api/v1/auth');
                 setIsLoggedIn(true);
-            } catch {
-                const res = await api.get('/api/v1/refresh');
-                if(res.status === 200){
-                    setIsLoggedIn(true);
-                } else { 
-                    setIsLoggedIn(false);
+            } catch (err) {
+                if (err.response.status === 401) {
+                    const response = await api.post('/api/v1/refresh');
+                    if (response.status === 200) {
+                        setIsLoggedIn(true);
+                    } else {
+                        setIsLoggedIn(false);
+                    }
                 }
             }
         };
@@ -70,7 +72,7 @@ const Home = () => {
         setSearchTerm(e.target.value);
     };
 
-    const handleAddToCart = (productId, price, item) => {
+    const handleAddToCart = (productId, price, item, imagePath) => {
         if(!isLoggedIn){
             return redirectUser('/login')
         }
@@ -79,7 +81,7 @@ const Home = () => {
         const existingItem = cart.find(item => item.productId === productId);
 
         if (!existingItem) {
-            cart.push({ productId, item, price, quantity: 1 });
+            cart.push({ productId, item, price, imagePath, quantity: 1 });
             setCartCount(cartCount + 1);
         } else {
             existingItem.quantity += 1;
@@ -94,7 +96,7 @@ const Home = () => {
             // Optionally, call a logout API endpoint to clear the cookie
             try {
                 await api.post('/api/v1/logout');
-            } catch (e) {}
+            } catch {}
     };
 
     const toggleMenu = () => {
@@ -255,7 +257,7 @@ const Home = () => {
                                 <div className="flex items-center justify-between mt-2">
                                     <p className="text-lg font-semibold text-black">R${product.price.toFixed(2)}</p> 
                                     <button
-                                        onClick={() => handleAddToCart(product._id, product.price, product.item)}
+                                        onClick={() => handleAddToCart(product._id, product.price, product.item, product.imagePath)}
                                         className="text-black"
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 relative" fill="none" viewBox="0 0 24 24" stroke="black">
