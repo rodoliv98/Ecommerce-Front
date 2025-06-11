@@ -112,10 +112,6 @@ const Home = () => {
         (selectedCategory === '' || product.category === selectedCategory)
     );
 
-    setTimeInterval(() => {
-        api.get('/api/v1/status');
-    }, 15000)
-
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-white">
