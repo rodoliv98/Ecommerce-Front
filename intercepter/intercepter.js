@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: 'https://advisory-sadella-rodoliv98-bfcde16c.koyeb.app/',
+    baseURL: 'https://advisory-sadella-rodoliv98-bfcde16c.koyeb.app',
     withCredentials: true
 });
 
