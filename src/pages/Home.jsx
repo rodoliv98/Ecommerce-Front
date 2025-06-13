@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '/intercepter/intercepter.js'
+import axios from 'axios';
 
 const Home = () => {
     const [products, setProducts] = useState([]);
@@ -17,7 +18,7 @@ const Home = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await api.get('/api/v1/products');
+                const response = await axios.get('https://advisory-sadella-rodoliv98-bfcde16c.koyeb.app/api/v1/products');
                 console.log(response)
                 setProducts(response.data);
             } catch {
