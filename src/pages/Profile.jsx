@@ -13,7 +13,9 @@ const Profile = () => {
             try {
                 const response = await api.get('/api/v1/user');
                 setUserData(response.data);
+                console.log(response)
             } catch (err) {
+                console.log(err)
                 if(err.response.status === 401){
                     userRedirect('/login');
                 }
