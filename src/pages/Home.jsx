@@ -21,7 +21,8 @@ const Home = () => {
                 const response = await axios.get('https://advisory-sadella-rodoliv98-bfcde16c.koyeb.app/api/v1/products');
                 console.log(response)
                 setProducts(response.data);
-            } catch {
+            } catch (err) {
+                console.log(err)
                 setError('Failed to fetch products');
             } finally {
                 setLoading(false);
