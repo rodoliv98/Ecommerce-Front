@@ -28,7 +28,6 @@ const DeleteProduct = () => {
             const response = await api.delete(`/api/v1/products/${productId}`);
             setMessage(response.data.message || 'Product deleted successfully!');
         } catch (error) {
-            console.log(error)
             setMessage('Failed to delete product.');
         }
     };
