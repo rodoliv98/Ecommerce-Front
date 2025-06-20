@@ -118,6 +118,7 @@ const Home = () => {
                 <div className="flex flex-col items-center">
                     <div className="w-16 h-16 border-4 border-black border-dashed rounded-full animate-spin"></div>
                     <p className="text-black mt-4">Carregando...</p>
+                    <p className="text-black mt-2">Isso pode levar alguns segundos</p>
                 </div>
             </div>
         );
